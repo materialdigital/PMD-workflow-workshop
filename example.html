@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyiron example notebook &#8212; PMD-workflow-workshop</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.37f24b989f4638ff9c27c22dc7559d4f.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pyiron workflow template" href="README.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo_dark.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PMD-workflow-workshop</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   pyiron workflow template
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   pyiron example notebook
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://pyiron.org">pyiron</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="pyiron-example-notebook">
+<h1>pyiron example notebook<a class="headerlink" href="#pyiron-example-notebook" title="Permalink to this headline">¶</a></h1>
+<p>This is an example notebook to demonstrate the functionality of the publication template. The notebook loads an existing Si calculation and calculates the total energy using LAMMPS and the quip potential provided as additional resource in this repository.</p>
+<p>The calculation archive was created using the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_atomistics</span> <span class="kn">import</span> <span class="n">Project</span>
+<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;old_calculation&quot;</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Lammps</span><span class="p">(</span><span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;lmp_si&quot;</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">ase</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="s2">&quot;Si&quot;</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">destination_path</span><span class="o">=</span><span class="s2">&quot;save&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The pyiron project class is imported using:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_atomistics</span> <span class="kn">import</span> <span class="n">Project</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To validate the previous calculation have been successfully imported:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr_data</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;pyiron/calculation&quot;</span><span class="p">)</span>
+<span class="n">pr_data</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>finished</td>
+      <td>Si2</td>
+      <td>lmp_si</td>
+      <td>/lmp_si</td>
+      <td>/home/jovyan/</td>
+      <td>calculation/old_calculation/</td>
+      <td>2021-03-19 16:21:40.376046</td>
+      <td>2021-03-19 16:21:41.573096</td>
+      <td>1.0</td>
+      <td>pyiron@MacBook-Pro.local#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Reload the existing calculation to continue with the previous structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_reload</span> <span class="o">=</span> <span class="n">pr_data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;lmp_si&quot;</span><span class="p">)</span>
+<span class="n">structure_reload</span> <span class="o">=</span> <span class="n">job_reload</span><span class="o">.</span><span class="n">get_structure</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a new LAMMPS job object and assign the structure from the previous calculation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr_new</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;new_calculation&quot;</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">pr_new</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Lammps</span><span class="p">(</span><span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;lmp_quip&quot;</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">structure_reload</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>List all available interatomic potentials:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">view_potentials</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Config</th>
+      <th>Filename</th>
+      <th>Model</th>
+      <th>Name</th>
+      <th>Species</th>
+      <th>Citations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[pair_style quip\n, pair_coeff * * sw_example.xml "IP SW" 14\n]</td>
+      <td>[quip/sw_example.xml, quip/data_sw]</td>
+      <td>QUIP</td>
+      <td>Si-quip-xml</td>
+      <td>[Si]</td>
+      <td>{}</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[pair_style sw\n, pair_coeff * * Si.sw Si\n]</td>
+      <td>[potential_LAMMPS/1985--Stillinger-F-H--Si--LAMMPS--ipr1/Si.sw]</td>
+      <td>NISTiprpy</td>
+      <td>1985--Stillinger-F-H--Si--LAMMPS--ipr1</td>
+      <td>[Si]</td>
+      <td>[{'Stillinger_1985': {'title': 'Computer simulation of local order in condensed phases of silicon', 'journal': 'Physical Review B', 'volume': '31', 'pages': '5262--5271', 'number': '8', 'doi': '10...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>[pair_style tersoff\n, pair_coeff * * 1988_Si(B).tersoff Si\n]</td>
+      <td>[potential_LAMMPS/1988--Tersoff-J--Si-b--LAMMPS--ipr1/1988_Si(B).tersoff]</td>
+      <td>NISTiprpy</td>
+      <td>1988--Tersoff-J--Si-b--LAMMPS--ipr1</td>
+      <td>[Si]</td>
+      <td>[{'Tersoff_1988': {'title': 'New empirical approach for the structure and energy of covalent systems', 'journal': 'Physical Review B', 'volume': '37', 'pages': '6991--7000', 'number': '12', 'doi':...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>[pair_style tersoff\n, pair_coeff * * 1988_Si(C).tersoff Si\n]</td>
+      <td>[potential_LAMMPS/1988--Tersoff-J--Si-c--LAMMPS--ipr1/1988_Si(C).tersoff]</td>
+      <td>NISTiprpy</td>
+      <td>1988--Tersoff-J--Si-c--LAMMPS--ipr1</td>
+      <td>[Si]</td>
+      <td>[{'Tersoff_1988': {'title': 'Empirical interatomic potential for silicon with improved elastic properties', 'journal': 'Physical Review B', 'volume': '38', 'pages': '9902--9905', 'number': '14', '...</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>[pair_style tersoff\n, pair_coeff * * 1989_SiC.tersoff Si C\n]</td>
+      <td>[potential_LAMMPS/1989--Tersoff-J--Si-C--LAMMPS--ipr1/1989_SiC.tersoff]</td>
+      <td>NISTiprpy</td>
+      <td>1989--Tersoff-J--Si-C--LAMMPS--ipr1</td>
+      <td>[Si, C]</td>
+      <td>[{'Tersoff_1989': {'title': 'Modeling solid-state chemistry: Interatomic potentials for multicomponent systems', 'journal': 'Physical Review B', 'volume': '39', 'pages': '5566--5568', 'number': '8...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>917</th>
+      <td>[pair_style kim Sim_LAMMPS_TersoffZBL_DevanathanDiazdelaRubiaWeber_1998_SiC__SM_578912636995_000\n, pair_coeff * * Si C\n]</td>
+      <td>[]</td>
+      <td>OPENKIM</td>
+      <td>Sim_LAMMPS_TersoffZBL_DevanathanDiazdelaRubiaWeber_1998_SiC__SM_578912636995_000</td>
+      <td>[Si, C]</td>
+      <td>[{'R._1998': {'title': 'Displacement threshold energies in β-SiC', 'volume': '253', 'year': '1998', 'journal': 'Journal of Nuclear Materials', 'doi': '10.1016/S0022-3115(97)00304-8', 'author': ['D...</td>
+    </tr>
+    <tr>
+      <th>920</th>
+      <td>[pair_style kim Sim_LAMMPS_Vashishta_BroughtonMeliVashishta_1997_SiO__SM_422553794879_000\n, pair_coeff * * Si O\n]</td>
+      <td>[]</td>
+      <td>OPENKIM</td>
+      <td>Sim_LAMMPS_Vashishta_BroughtonMeliVashishta_1997_SiO__SM_422553794879_000</td>
+      <td>[Si, O]</td>
+      <td>[{'Q._1997': {'title': 'Direct atomistic simulation of quartz crystal oscillators: Bulk properties and nanoscale devices', 'volume': '56', 'year': '1997', 'journal': 'Physical Review B', 'doi': '1...</td>
+    </tr>
+    <tr>
+      <th>921</th>
+      <td>[pair_style kim Sim_LAMMPS_Vashishta_NakanoKaliaVashishta_1994_SiO__SM_503555646986_000\n, pair_coeff * * Si O\n]</td>
+      <td>[]</td>
+      <td>OPENKIM</td>
+      <td>Sim_LAMMPS_Vashishta_NakanoKaliaVashishta_1994_SiO__SM_503555646986_000</td>
+      <td>[Si, O]</td>
+      <td>[{'Aiichiro_1994': {'title': 'First sharp diffraction peak and intermediate-range order in amorphous silica: finite-size effects in molecular dynamics simulations', 'volume': '171', 'year': '1994'...</td>
+    </tr>
+    <tr>
+      <th>922</th>
+      <td>[pair_style kim Sim_LAMMPS_Vashishta_VashishtaKaliaNakano_2007_SiC__SM_196548226654_000\n, pair_coeff * * Si C\n]</td>
+      <td>[]</td>
+      <td>OPENKIM</td>
+      <td>Sim_LAMMPS_Vashishta_VashishtaKaliaNakano_2007_SiC__SM_196548226654_000</td>
+      <td>[Si, C]</td>
+      <td>[{'Priya_2007': {'title': 'Interaction potential for silicon carbide: A molecular dynamics study of elastic constants and vibrational density of states for crystalline and amorphous silicon carbid...</td>
+    </tr>
+    <tr>
+      <th>923</th>
+      <td>[pair_style kim Sim_LAMMPS_Vashishta_VashishtaKaliaRino_1990_SiO__SM_887826436433_000\n, pair_coeff * * Si O\n]</td>
+      <td>[]</td>
+      <td>OPENKIM</td>
+      <td>Sim_LAMMPS_Vashishta_VashishtaKaliaRino_1990_SiO__SM_887826436433_000</td>
+      <td>[Si, O]</td>
+      <td>[{'P._1990': {'title': 'Interaction potential for {SiO}2: A molecular-dynamics study of structural correlations', 'volume': '41', 'year': '1990', 'journal': 'Physical Review B', 'doi': '10.1103/ph...</td>
+    </tr>
+  </tbody>
+</table>
+<p>77 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>Select the LAMMPS quip potential provided in the resource directory and execute the calculation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="s2">&quot;Si-quip-xml&quot;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job lmp_quip was saved and received the ID: 2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Print the total energy of both calculation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s2">&quot;output/generic/energy_tot&quot;</span><span class="p">],</span> <span class="n">job_reload</span><span class="p">[</span><span class="s2">&quot;output/generic/energy_tot&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-8.66999651] [-8.67319651]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">pyiron workflow template</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By pyiron<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
