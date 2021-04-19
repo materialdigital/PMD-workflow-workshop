@@ -1,0 +1,7 @@
+channels:
+- conda-forge
+dependencies:
+- python
+- pyiron_atomistics =0.2.8
+- lammps =2021.02.10=*openmpi*_4
+- nglview =2.7.7

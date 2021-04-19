@@ -1,0 +1,11 @@
+# install environment 
+mamba env update --name notebook --file environment.yml
+
+# move pyiron config to home directory 
+mv .binder/.pyiron .
+
+# import dataset
+bash .github/ci_support/import_dataset.sh
+
+# install nglview
+bash .github/ci_support/install_nglview.sh
