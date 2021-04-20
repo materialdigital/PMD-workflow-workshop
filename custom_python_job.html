@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PMD workflow workshop &#8212; PMD-workflow-workshop</title>
+    <title>&lt;no title&gt; &#8212; PMD-workflow-workshop</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,7 +54,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="custom_python_job.html" />
+    <link rel="next" title="Data mining using pyiron tables" href="data_mining.html" />
+    <link rel="prev" title="PMD workflow workshop" href="README.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -85,8 +86,8 @@
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
    PMD workflow workshop
   </a>
  </li>
@@ -157,9 +158,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/custom_python_job.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -177,6 +178,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/custom_python_job.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -186,12 +204,7 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#license">
-   License
-  </a>
- </li>
+            <ul class="simple nav section-nav flex-column">
 </ul>
 
         </nav>
@@ -204,12 +217,49 @@
         
               <div>
                 
-  <div class="section" id="pmd-workflow-workshop">
-<h1>PMD workflow workshop<a class="headerlink" href="#pmd-workflow-workshop" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>pyiron and also the pyiron publication template are licensed under the BSD-3-Clause license which is included in the <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file. In addition an <code class="docutils literal notranslate"><span class="pre">CODE_OF_CONDUCT.md</span></code> file is included to foster an open and welcoming environment.</p>
-<div class="toctree-wrapper compound">
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">PythonTemplateJob</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ToyJob</span><span class="p">(</span><span class="n">PythonTemplateJob</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ToyJob</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s1">&#39;input_energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+    
+    <span class="c1"># This function is executed </span>
+    <span class="k">def</span> <span class="nf">run_static</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_hdf5</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;output/generic&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5out</span><span class="p">:</span> 
+             <span class="n">h5out</span><span class="p">[</span><span class="s2">&quot;energy_tot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s2">&quot;input_energy&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">Project</span>
+<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs_silently</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">ToyJob</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;toy&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">job</span><span class="p">[</span><span class="s1">&#39;output/generic/energy_tot&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Parameter  Value Comment
+0  input_energy    100        
+The job toy was saved and received the ID: 1
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+</pre></div>
 </div>
 </div>
 </div>
@@ -239,7 +289,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='right-next' id="next-link" href="custom_python_job.html" title="next page">&lt;no title&gt;</a>
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">PMD workflow workshop</a>
+    <a class='right-next' id="next-link" href="data_mining.html" title="next page">Data mining using pyiron tables</a>
 
         </div>
         

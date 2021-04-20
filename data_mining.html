@@ -1,0 +1,1593 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data mining using pyiron tables &#8212; PMD-workflow-workshop</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.37f24b989f4638ff9c27c22dc7559d4f.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Implementing a new simulation code" href="intro_proj.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="custom_python_job.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo_dark.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PMD-workflow-workshop</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   PMD workflow workshop
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Data mining using pyiron tables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_proj.html">
+   Implementing a new simulation code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lammps-damask-workflow.html">
+   Concentration dependent elastic constants
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lammps-damask-workflow.html#damask-simulations">
+   DAMASK Simulations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lammps_job.html">
+   First steps through pyiron
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://pyiron.org">pyiron</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/data_mining.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/data_mining.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-dummy-job-to-get-list-of-potentials">
+   Creating a dummy job to get list of potentials
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-murnaghan-job-for-each-potential-in-their-respective-subprojects">
+   Creating a Murnaghan job for each potential in their respective subprojects
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-using-pyirontables">
+   Analysis using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     PyironTables
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-filter-functions">
+     Defining filter functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-functions-that-act-on-jobs">
+     Defining functions that act on jobs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-a-pyiron-table">
+     Creating a pyiron table
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="data-mining-using-pyiron-tables">
+<h1>Data mining using pyiron tables<a class="headerlink" href="#data-mining-using-pyiron-tables" title="Permalink to this headline">¶</a></h1>
+<p>In this example, the data mining capabilities of pyiron using the <code class="docutils literal notranslate"><span class="pre">PyironTables</span></code> class is demonstrated by computing and contrasting the ground state properties of fcc-Al using various force fields.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_atomistics</span> <span class="kn">import</span> <span class="n">Project</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;potential_scan&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-dummy-job-to-get-list-of-potentials">
+<h2>Creating a dummy job to get list of potentials<a class="headerlink" href="#creating-a-dummy-job-to-get-list-of-potentials" title="Permalink to this headline">¶</a></h2>
+<p>In order to get the list of available LAMMPS potentials, a dummy job with an Al bulk structure is created</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">job_type</span><span class="o">.</span><span class="n">Lammps</span><span class="p">,</span> <span class="s2">&quot;dummy_job&quot;</span><span class="p">)</span>
+<span class="n">dummy_job</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_ase_bulk</span><span class="p">(</span><span class="s2">&quot;Al&quot;</span><span class="p">)</span>
+<span class="c1"># Chosing only select potentials to run (you can play with these valuess)</span>
+<span class="n">num_potentials</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">potential_list</span> <span class="o">=</span> <span class="n">dummy_job</span><span class="o">.</span><span class="n">list_potentials</span><span class="p">()[:</span><span class="n">num_potentials</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-murnaghan-job-for-each-potential-in-their-respective-subprojects">
+<h2>Creating a Murnaghan job for each potential in their respective subprojects<a class="headerlink" href="#creating-a-murnaghan-job-for-each-potential-in-their-respective-subprojects" title="Permalink to this headline">¶</a></h2>
+<p>A separate Murnaghan job (to compute equilibrium lattice constant and the bulk modulus) is created and run for every potential</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pot</span> <span class="ow">in</span> <span class="n">potential_list</span><span class="p">:</span>
+    <span class="n">pot_str</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="c1"># open a subproject within a project</span>
+    <span class="k">with</span> <span class="n">pr</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">pot_str</span><span class="p">)</span> <span class="k">as</span> <span class="n">pr_sub</span><span class="p">:</span>
+        <span class="c1"># no need for unique job name if in different subprojects </span>
+        <span class="n">job_name</span> <span class="o">=</span> <span class="s2">&quot;murn_Al&quot;</span>
+        <span class="c1"># Use the subproject to create the jobs</span>
+        <span class="n">murn</span> <span class="o">=</span> <span class="n">pr_sub</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">job_type</span><span class="o">.</span><span class="n">Murnaghan</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span>
+        <span class="n">job_ref</span> <span class="o">=</span> <span class="n">pr_sub</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">job_type</span><span class="o">.</span><span class="n">Lammps</span><span class="p">,</span> <span class="s2">&quot;Al_ref&quot;</span><span class="p">)</span>
+        <span class="n">job_ref</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_ase_bulk</span><span class="p">(</span><span class="s2">&quot;Al&quot;</span><span class="p">,</span> <span class="n">cubic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">job_ref</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">pot</span>
+        <span class="n">job_ref</span><span class="o">.</span><span class="n">calc_minimize</span><span class="p">()</span>
+        <span class="n">murn</span><span class="o">.</span><span class="n">ref_job</span> <span class="o">=</span> <span class="n">job_ref</span>
+        <span class="c1"># Some potentials may not work with certain LAMMPS compilations.</span>
+        <span class="c1"># Therefore, we need to have a little exception handling</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">murn</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job murn_Al was saved and received the ID: 1
+The job strain_0_9 was saved and received the ID: 2
+The job strain_0_92 was saved and received the ID: 3
+The job strain_0_94 was saved and received the ID: 4
+The job strain_0_96 was saved and received the ID: 5
+The job strain_0_98 was saved and received the ID: 6
+The job strain_1_0 was saved and received the ID: 7
+The job strain_1_02 was saved and received the ID: 8
+The job strain_1_04 was saved and received the ID: 9
+The job strain_1_06 was saved and received the ID: 10
+The job strain_1_08 was saved and received the ID: 11
+The job strain_1_1 was saved and received the ID: 12
+job_id:  2 finished
+job_id:  3 finished
+job_id:  4 finished
+job_id:  5 finished
+job_id:  6 finished
+job_id:  7 finished
+job_id:  8 finished
+job_id:  9 finished
+job_id:  10 finished
+job_id:  11 finished
+job_id:  12 finished
+The job murn_Al was saved and received the ID: 13
+The job strain_0_9 was saved and received the ID: 14
+The job strain_0_92 was saved and received the ID: 15
+The job strain_0_94 was saved and received the ID: 16
+The job strain_0_96 was saved and received the ID: 17
+The job strain_0_98 was saved and received the ID: 18
+The job strain_1_0 was saved and received the ID: 19
+The job strain_1_02 was saved and received the ID: 20
+The job strain_1_04 was saved and received the ID: 21
+The job strain_1_06 was saved and received the ID: 22
+The job strain_1_08 was saved and received the ID: 23
+The job strain_1_1 was saved and received the ID: 24
+job_id:  14 finished
+job_id:  15 finished
+job_id:  16 finished
+job_id:  17 finished
+job_id:  18 finished
+job_id:  19 finished
+job_id:  20 finished
+job_id:  21 finished
+job_id:  22 finished
+job_id:  23 finished
+job_id:  24 finished
+The job murn_Al was saved and received the ID: 25
+The job strain_0_9 was saved and received the ID: 26
+The job strain_0_92 was saved and received the ID: 27
+The job strain_0_94 was saved and received the ID: 28
+The job strain_0_96 was saved and received the ID: 29
+The job strain_0_98 was saved and received the ID: 30
+The job strain_1_0 was saved and received the ID: 31
+The job strain_1_02 was saved and received the ID: 32
+The job strain_1_04 was saved and received the ID: 33
+The job strain_1_06 was saved and received the ID: 34
+The job strain_1_08 was saved and received the ID: 35
+The job strain_1_1 was saved and received the ID: 36
+job_id:  26 finished
+job_id:  27 finished
+job_id:  28 finished
+job_id:  29 finished
+job_id:  30 finished
+job_id:  31 finished
+job_id:  32 finished
+job_id:  33 finished
+job_id:  34 finished
+job_id:  35 finished
+job_id:  36 finished
+The job murn_Al was saved and received the ID: 37
+The job strain_0_9 was saved and received the ID: 38
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2020-05-01 14:22:19,979 - pyiron_log - WARNING - Job aborted
+2020-05-01 14:22:19,982 - pyiron_log - WARNING - LAMMPS (3 Mar 2020)
+Reading data file ...
+  orthogonal box = (0 0 0) to (3.91023 3.91023 3.91023)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  4 atoms
+  read_data CPU = 0.00191307 secs
+ERROR: MEAM library error 3 (src/USER-MEAMC/pair_meamc.cpp:596)
+Last command: pair_coeff * * MgAlZn.library.meam Mg Al MgAlZn.parameter.meam Mg Al Zn
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job murn_Al was saved and received the ID: 39
+The job strain_0_9 was saved and received the ID: 40
+The job strain_0_92 was saved and received the ID: 41
+The job strain_0_94 was saved and received the ID: 42
+The job strain_0_96 was saved and received the ID: 43
+The job strain_0_98 was saved and received the ID: 44
+The job strain_1_0 was saved and received the ID: 45
+The job strain_1_02 was saved and received the ID: 46
+The job strain_1_04 was saved and received the ID: 47
+The job strain_1_06 was saved and received the ID: 48
+The job strain_1_08 was saved and received the ID: 49
+The job strain_1_1 was saved and received the ID: 50
+job_id:  40 finished
+job_id:  41 finished
+job_id:  42 finished
+job_id:  43 finished
+job_id:  44 finished
+job_id:  45 finished
+job_id:  46 finished
+job_id:  47 finished
+job_id:  48 finished
+job_id:  49 finished
+job_id:  50 finished
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you inspect the job table, you would find that each Murnaghan job generates various small LAMMPS jobs (see column <code class="docutils literal notranslate"><span class="pre">hamilton</span></code>). Some of these jobs might have failed with status <code class="docutils literal notranslate"><span class="pre">aborted</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>murn_Al</td>
+      <td>/murn_Al</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/</td>
+      <td>2020-05-01 14:20:15.185926</td>
+      <td>2020-05-01 14:20:52.212726</td>
+      <td>37.0</td>
+      <td>pyiron@cmdell17#1#11/11</td>
+      <td>Murnaghan</td>
+      <td>0.3.0</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_9</td>
+      <td>/strain_0_9</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:16.872239</td>
+      <td>2020-05-01 14:20:18.199291</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_92</td>
+      <td>/strain_0_92</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:20.376998</td>
+      <td>2020-05-01 14:20:21.474685</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_94</td>
+      <td>/strain_0_94</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:23.410323</td>
+      <td>2020-05-01 14:20:24.454505</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_96</td>
+      <td>/strain_0_96</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:26.407384</td>
+      <td>2020-05-01 14:20:27.448024</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_98</td>
+      <td>/strain_0_98</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:29.389853</td>
+      <td>2020-05-01 14:20:30.457648</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_0</td>
+      <td>/strain_1_0</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:32.440577</td>
+      <td>2020-05-01 14:20:33.587692</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_02</td>
+      <td>/strain_1_02</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:35.659606</td>
+      <td>2020-05-01 14:20:36.717203</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_04</td>
+      <td>/strain_1_04</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:39.247825</td>
+      <td>2020-05-01 14:20:40.631913</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_06</td>
+      <td>/strain_1_06</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:43.093369</td>
+      <td>2020-05-01 14:20:44.365442</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_08</td>
+      <td>/strain_1_08</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:46.700972</td>
+      <td>2020-05-01 14:20:47.809129</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_1</td>
+      <td>/strain_1_1</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_Mg_Mendelev_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:49.872971</td>
+      <td>2020-05-01 14:20:51.002065</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>murn_Al</td>
+      <td>/murn_Al</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/</td>
+      <td>2020-05-01 14:20:52.854206</td>
+      <td>2020-05-01 14:21:40.211332</td>
+      <td>47.0</td>
+      <td>pyiron@cmdell17#1#11/11</td>
+      <td>Murnaghan</td>
+      <td>0.3.0</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_9</td>
+      <td>/strain_0_9</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:54.595238</td>
+      <td>2020-05-01 14:20:55.863602</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_92</td>
+      <td>/strain_0_92</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:20:58.465134</td>
+      <td>2020-05-01 14:20:59.616677</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_94</td>
+      <td>/strain_0_94</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:02.323952</td>
+      <td>2020-05-01 14:21:03.842627</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_96</td>
+      <td>/strain_0_96</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:07.120770</td>
+      <td>2020-05-01 14:21:08.247122</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_98</td>
+      <td>/strain_0_98</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:10.867935</td>
+      <td>2020-05-01 14:21:12.084671</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_0</td>
+      <td>/strain_1_0</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:14.859515</td>
+      <td>2020-05-01 14:21:15.890379</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_02</td>
+      <td>/strain_1_02</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:18.333658</td>
+      <td>2020-05-01 14:21:19.773168</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_04</td>
+      <td>/strain_1_04</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:23.134672</td>
+      <td>2020-05-01 14:21:24.701105</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_06</td>
+      <td>/strain_1_06</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:28.160753</td>
+      <td>2020-05-01 14:21:29.635477</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>23</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_08</td>
+      <td>/strain_1_08</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:32.177125</td>
+      <td>2020-05-01 14:21:33.407034</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>24</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_1</td>
+      <td>/strain_1_1</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Zope_Ti_Al_2003_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:36.544373</td>
+      <td>2020-05-01 14:21:38.079025</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>25</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>murn_Al</td>
+      <td>/murn_Al</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/</td>
+      <td>2020-05-01 14:21:41.112811</td>
+      <td>2020-05-01 14:22:14.935040</td>
+      <td>33.0</td>
+      <td>pyiron@cmdell17#1#11/11</td>
+      <td>Murnaghan</td>
+      <td>0.3.0</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>26</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_9</td>
+      <td>/strain_0_9</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:43.292578</td>
+      <td>2020-05-01 14:21:44.486249</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>27</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_92</td>
+      <td>/strain_0_92</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:46.220651</td>
+      <td>2020-05-01 14:21:47.239424</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>28</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_94</td>
+      <td>/strain_0_94</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:49.064622</td>
+      <td>2020-05-01 14:21:50.027115</td>
+      <td>0.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>29</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_96</td>
+      <td>/strain_0_96</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:51.711371</td>
+      <td>2020-05-01 14:21:52.700248</td>
+      <td>0.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>30</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_98</td>
+      <td>/strain_0_98</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:54.391263</td>
+      <td>2020-05-01 14:21:55.421046</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>31</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_0</td>
+      <td>/strain_1_0</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:57.127116</td>
+      <td>2020-05-01 14:21:58.177664</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>32</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_02</td>
+      <td>/strain_1_02</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:21:59.836684</td>
+      <td>2020-05-01 14:22:00.908548</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>33</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_04</td>
+      <td>/strain_1_04</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:02.637902</td>
+      <td>2020-05-01 14:22:03.654759</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>34</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_06</td>
+      <td>/strain_1_06</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:05.431956</td>
+      <td>2020-05-01 14:22:06.592121</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>35</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_08</td>
+      <td>/strain_1_08</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:09.286335</td>
+      <td>2020-05-01 14:22:10.252819</td>
+      <td>0.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>36</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_1</td>
+      <td>/strain_1_1</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/Al_H_Ni_Angelo_eam/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:12.026812</td>
+      <td>2020-05-01 14:22:13.233506</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>37</td>
+      <td>aborted</td>
+      <td>Al4</td>
+      <td>murn_Al</td>
+      <td>/murn_Al</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2018__Dickel_D_E__Mg_Al_Zn__LAMMPS__ipr1/</td>
+      <td>2020-05-01 14:22:16.205392</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>pyiron@cmdell17#1#1/11</td>
+      <td>Murnaghan</td>
+      <td>0.3.0</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>38</td>
+      <td>aborted</td>
+      <td>Al4</td>
+      <td>strain_0_9</td>
+      <td>/strain_0_9</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2018__Dickel_D_E__Mg_Al_Zn__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:19.500822</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>37.0</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>39</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>murn_Al</td>
+      <td>/murn_Al</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/</td>
+      <td>2020-05-01 14:22:20.918639</td>
+      <td>2020-05-01 14:22:56.348776</td>
+      <td>35.0</td>
+      <td>pyiron@cmdell17#1#11/11</td>
+      <td>Murnaghan</td>
+      <td>0.3.0</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>40</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_9</td>
+      <td>/strain_0_9</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:23.362886</td>
+      <td>2020-05-01 14:22:24.543279</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>41</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_92</td>
+      <td>/strain_0_92</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:26.098609</td>
+      <td>2020-05-01 14:22:27.456331</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>42</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_94</td>
+      <td>/strain_0_94</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:29.355607</td>
+      <td>2020-05-01 14:22:30.418893</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>43</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_96</td>
+      <td>/strain_0_96</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:32.522105</td>
+      <td>2020-05-01 14:22:34.234605</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>44</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_0_98</td>
+      <td>/strain_0_98</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:36.960119</td>
+      <td>2020-05-01 14:22:38.166629</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>45</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_0</td>
+      <td>/strain_1_0</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:39.686173</td>
+      <td>2020-05-01 14:22:40.836256</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>46</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_02</td>
+      <td>/strain_1_02</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:42.989847</td>
+      <td>2020-05-01 14:22:44.268105</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>47</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_04</td>
+      <td>/strain_1_04</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:46.008623</td>
+      <td>2020-05-01 14:22:47.372670</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>48</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_06</td>
+      <td>/strain_1_06</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:49.144214</td>
+      <td>2020-05-01 14:22:50.153294</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>49</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_08</td>
+      <td>/strain_1_08</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:51.746560</td>
+      <td>2020-05-01 14:22:52.772483</td>
+      <td>1.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>50</td>
+      <td>finished</td>
+      <td>Al4</td>
+      <td>strain_1_1</td>
+      <td>/strain_1_1</td>
+      <td>/home/surendralal/</td>
+      <td>programs/pyiron/notebooks/potential_scan/2000__Landa_A__Al_Pb__LAMMPS__ipr1/murn_Al_hdf5/</td>
+      <td>2020-05-01 14:22:54.390591</td>
+      <td>2020-05-01 14:22:55.348395</td>
+      <td>0.0</td>
+      <td>pyiron@cmdell17#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="analysis-using-pyirontables">
+<h2>Analysis using <code class="docutils literal notranslate"><span class="pre">PyironTables</span></code><a class="headerlink" href="#analysis-using-pyirontables" title="Permalink to this headline">¶</a></h2>
+<p>The idea now is to go over all finished Murnaghan jobs and extract the equilibrium lattice parameter and bulk modulus, and classify them based of the potential used.</p>
+<div class="section" id="defining-filter-functions">
+<h3>Defining filter functions<a class="headerlink" href="#defining-filter-functions" title="Permalink to this headline">¶</a></h3>
+<p>Since a project can have thousands if not millions of jobs, it is necessary to “filter” the data and only apply the functions (some of which can be computationally expensive) to only this data. In this example, we need to filter jobs that are finished and are of type <code class="docutils literal notranslate"><span class="pre">Murnaghan</span></code>. This can be done in two ways: using the job table i.e. the entries in the database, or using the job itself i.e. using entries in the stored HDF5 file. Below are examples of filter functions acting on the job and the job table respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtering using the database entries (which are obtained as a pandas Dataframe)</span>
+<span class="k">def</span> <span class="nf">db_filter_function</span><span class="p">(</span><span class="n">job_table</span><span class="p">):</span>
+    <span class="c1"># Returns a pandas Series of boolean values (True for entries that have status finished </span>
+    <span class="c1"># and hamilton type Murnaghan.)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">job_table</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;finished&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">job_table</span><span class="o">.</span><span class="n">hamilton</span> <span class="o">==</span> <span class="s2">&quot;Murnaghan&quot;</span><span class="p">)</span>
+
+<span class="c1"># Filtering based on the job</span>
+<span class="k">def</span> <span class="nf">job_filter_function</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+    <span class="c1"># returns a boolean value if the status of the job </span>
+    <span class="c1">#is finished and if &quot;murn&quot; is in it&#39;s job name </span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;finished&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="s2">&quot;murn&quot;</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">job_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Obviously, using the database is faster in this case but sometimes it might be necessary to filter based on some data that are stored in the HDF5 file of the job. The database filter is applied first followed by the job based filter.</p>
+</div>
+<div class="section" id="defining-functions-that-act-on-jobs">
+<h3>Defining functions that act on jobs<a class="headerlink" href="#defining-functions-that-act-on-jobs" title="Permalink to this headline">¶</a></h3>
+<p>Now we define a set of functions that will be applied on each job to return a certain value. The filtered jobs will be loaded and these functions will be applied on the loaded jobs. The advantage of such functions is that the jobs do not have to be loaded every time such operations are performed. The filtered jobs are loaded once, and then they are passed to these functions to construct the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting equilibrium lattice parameter from Murnaghan jobs</span>
+<span class="k">def</span> <span class="nf">get_lattice_parameter</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;output/equilibrium_volume&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Getting equilibrium bulk modulus from Murnaghan jobs</span>
+<span class="k">def</span> <span class="nf">get_bm</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;output/equilibrium_bulk_modulus&quot;</span><span class="p">]</span>
+
+<span class="c1"># Getting the potential used in each Murnaghan job</span>
+<span class="k">def</span> <span class="nf">get_pot</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+    <span class="n">child</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s2">&quot;output/id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">child</span><span class="p">[</span><span class="s2">&quot;input/potential/Name&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-pyiron-table">
+<h3>Creating a pyiron table<a class="headerlink" href="#creating-a-pyiron-table" title="Permalink to this headline">¶</a></h3>
+<p>Now that all the functions are defined, the pyiron table called “table” is created in the following way. This works like a job and can be reloaded at any time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="c1"># creating a pyiron table</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+
+<span class="c1"># assigning a database filter function</span>
+<span class="n">table</span><span class="o">.</span><span class="n">db_filter_function</span> <span class="o">=</span> <span class="n">db_filter_function</span>
+
+<span class="c1"># Alternatively/additionally, a job based filter function can be applied </span>
+<span class="c1"># (it does the same thing in this case).</span>
+
+<span class="c1">#table.filter_function = job_filter_function</span>
+
+<span class="c1"># Adding the functions using the labels you like</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add</span><span class="p">[</span><span class="s2">&quot;a_eq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_lattice_parameter</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add</span><span class="p">[</span><span class="s2">&quot;bulk_modulus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_bm</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add</span><span class="p">[</span><span class="s2">&quot;potential&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_pot</span>
+<span class="c1"># Running the table to generate the data</span>
+<span class="n">table</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">run_again</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/4 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job table was saved and received the ID: 51
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 4/4 [00:00&lt;00:00, 20.91it/s]
+2020-05-01 14:22:57,257 - pyiron_log - WARNING - The job table is being loaded instead of running. To re-run use the argument &#39;run_again=True&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 531 ms, sys: 156 ms, total: 688 ms
+Wall time: 725 ms
+</pre></div>
+</div>
+</div>
+</div>
+<p>The output can now be obtained as a pandas DataFrame</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>job_id</th>
+      <th>a_eq</th>
+      <th>bulk_modulus</th>
+      <th>potential</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>4.045415</td>
+      <td>89.015487</td>
+      <td>Al_Mg_Mendelev_eam</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>13</td>
+      <td>4.049946</td>
+      <td>80.836779</td>
+      <td>Zope_Ti_Al_2003_eam</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>4.049954</td>
+      <td>81.040445</td>
+      <td>Al_H_Ni_Angelo_eam</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>39</td>
+      <td>4.031246</td>
+      <td>78.213776</td>
+      <td>2000--Landa-A--Al-Pb--LAMMPS--ipr1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can now compare the computed equilibrium lattice constants for each potential to those computed in the NIST database for Al (fcc phase). <a class="reference external" href="https://www.ctcms.nist.gov/potentials/system/Al/#Al">https://www.ctcms.nist.gov/potentials/system/Al/#Al</a>.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="custom_python_job.html" title="previous page">&lt;no title&gt;</a>
+    <a class='right-next' id="next-link" href="intro_proj.html" title="next page">Implementing a new simulation code</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By pyiron<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
