@@ -1,18 +1,17 @@
 channels:
 - conda-forge
 dependencies:
+- python=3.8
 - pyiron_atomistics=0.2.10
-- lammps =2021.02.10=*openmpi*_4
+- lammps =2021.02.10
 - nglview =3.0.1
-- matplotlib
-- pyiron_gpl=0.0.3
-- pyiron_continuum=0.0.1
-- sqsgenerator=0.0.5
-- damask=3.0.0
-- vtk=9.0.1
-- itkwidgets=0.32.0
-- pyvista=0.29.0
-- h5py=3.2.1
-- nglview=3.0.1
-- seaborn=0.11.1
-- papermill
+- matplotlib =3.4.1
+- pyiron_gpl =0.0.3
+- pyiron_continuum =0.0.1
+- sqsgenerator =0.0.5
+- damask =3.0.0
+- vtk =9.0.1
+- itkwidgets =0.32.0
+- pyvista =0.29.1
+- h5py =3.2.1
+- seaborn =0.11.1
