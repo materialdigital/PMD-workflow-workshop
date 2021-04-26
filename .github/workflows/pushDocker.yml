@@ -1,0 +1,18 @@
+name: Docker Push
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - run: docker build -t materialdigital/pyiron_onboarding_workshop:latest .docker_image/
+      - run: docker tag materialdigital/pyiron_onboarding_workshop:latest materialdigital/pyiron_onboarding_workshop:"$(date +%F)"
+      - run: docker images
+      - run: docker push materialdigital/pyiron_onboarding_workshop:latest
+      - run: docker push materialdigital/pyiron_onboarding_workshop:"$(date +%F)"
