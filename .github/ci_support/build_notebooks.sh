@@ -1,4 +1,7 @@
 #!/bin/bash
+# pyiron config 
+python .github/ci_support/pyironconfig.py
+
 # conda install papermill
 conda install -c conda-forge papermill
 
