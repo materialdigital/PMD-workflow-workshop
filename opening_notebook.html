@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PMD workflow workshop &#8212; PMD-workflow-workshop</title>
+    <title>Hands-on session &#8212; PMD-workflow-workshop</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,7 +54,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Integrating a generic, non-python tool in pyiron (Level B, recommended approach)" href="Exercises/custom_bash_job.html" />
+    <link rel="prev" title="Macroscopic response based on atomistic properties" href="lammps_damask_workflow/lammps-damask-workflow.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -85,13 +85,13 @@
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
    PMD workflow workshop
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="Exercises/custom_bash_job.html">
    Integrating a generic, non-python tool in pyiron (Level B, recommended approach)
@@ -152,8 +152,8 @@
    DAMASK Simulations
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="opening_notebook.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Hands-on session
   </a>
  </li>
@@ -197,9 +197,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/opening_notebook.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -217,6 +217,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/opening_notebook.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -228,8 +245,40 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#license">
-   License
+  <a class="reference internal nav-link" href="#general-guide-on-how-to-use-jupyter-environment">
+   General guide on how to use jupyter environment
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-with-jupyter-notebooks">
+     working with jupyter notebooks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#modes">
+     Modes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-a-markdown-cell">
+     Create a markdown cell
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#execute-a-cell">
+     Execute a cell
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#top-menu">
+     Top menu
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#restart-and-interupt-kernels">
+   Restart and interupt kernels
   </a>
  </li>
 </ul>
@@ -244,14 +293,95 @@
         
               <div>
                 
-  <div class="section" id="pmd-workflow-workshop">
-<h1>PMD workflow workshop<a class="headerlink" href="#pmd-workflow-workshop" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>pyiron and also the pyiron publication template are licensed under the BSD-3-Clause license which is included in the <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file. In addition an <code class="docutils literal notranslate"><span class="pre">CODE_OF_CONDUCT.md</span></code> file is included to foster an open and welcoming environment.</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="hands-on-session">
+<h1>Hands-on session<a class="headerlink" href="#hands-on-session" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the hands-on session.<br />
+In the next two hours, you will learn about how to use pyiron via the following notebooks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">intro_pyiron_building_blocks/intro.ipynb</span></code>: via a simulation, you will learn about building blocks of pyiron.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">customized_job/custom_python_job.ipynb</span></code>: you will learn how to implement a custom python job</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">customized_job/custom_bash_job.ipynb</span></code>: you will learn how to implement a custom non-python job, here a bash example is chosen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lammps_damask/lammps_damask_workflow.ipynb</span></code>: you will see how one can combine different tools in pyiron to analyze the macroscopic response of a material.</p></li>
+</ul>
+<div class="section" id="general-guide-on-how-to-use-jupyter-environment">
+<h2>General guide on how to use jupyter environment<a class="headerlink" href="#general-guide-on-how-to-use-jupyter-environment" title="Permalink to this headline">¶</a></h2>
+<p>pyiron uses jupyter environement as its front end, which can function as a full IDE.</p>
+<p>On left:</p>
+<ul class="simple">
+<li><p>file explorer</p></li>
+<li><p>Overview of open notebooks and running kernels</p></li>
+<li><p>table of content</p></li>
+<li><p>Extension manager</p></li>
+</ul>
+<p>On the write: a configurable workspace.</p>
+<ul class="simple">
+<li><p>write code</p></li>
+<li><p>jupyternotebooks</p></li>
+<li><p>open images of different formats</p></li>
+<li><p>Open a terminal, and execute bash commands</p></li>
+<li><p>and a lot more using various kernel availabe</p></li>
+</ul>
+<div class="section" id="working-with-jupyter-notebooks">
+<h3>working with jupyter notebooks<a class="headerlink" href="#working-with-jupyter-notebooks" title="Permalink to this headline">¶</a></h3>
+<p>Jupyter notebooks consists of number of cells and their outputs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;welcome to the onboarding workshop&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>welcome to the onboarding workshop
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="modes">
+<h3>Modes<a class="headerlink" href="#modes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Edit mode, via pressing enter you can type your code in the cells</p></li>
+<li><p>Command mode, enter <code class="docutils literal notranslate"><span class="pre">ESC</span></code> to exit edit mode</p></li>
+</ul>
+</div>
+<div class="section" id="create-a-markdown-cell">
+<h3>Create a markdown cell<a class="headerlink" href="#create-a-markdown-cell" title="Permalink to this headline">¶</a></h3>
+<p>In command mode, you can enter <code class="docutils literal notranslate"><span class="pre">M</span></code> and turn a cell to a markdown cell, to write your text.</p>
+</div>
+<div class="section" id="execute-a-cell">
+<h3>Execute a cell<a class="headerlink" href="#execute-a-cell" title="Permalink to this headline">¶</a></h3>
+<p>In edit mode, after writing your code, you can execute the cell via the following options:</p>
+<p><strong>- ctrl+enter — runs only the current cells</strong><br />
+<strong>- shift+enter — runs the current cell and move to the next cell</strong><br />
+<strong>- alt+enter — runs the current cell and create a new cell afterwards.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is PMD onboarding workshop&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is PMD onboarding workshop
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="top-menu">
+<h3>Top menu<a class="headerlink" href="#top-menu" title="Permalink to this headline">¶</a></h3>
+<p>Most useful menues are:</p>
+<ul class="simple">
+<li><p>kernel</p></li>
+<li><p>Run</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="restart-and-interupt-kernels">
+<h2>Restart and interupt kernels<a class="headerlink" href="#restart-and-interupt-kernels" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>To restart the kernel, you can use the <code class="docutils literal notranslate"><span class="pre">update</span></code> sign on top</p></li>
+<li><p>To interupt the kernel, you can use the <code class="docutils literal notranslate"><span class="pre">stop</span></code> sign on top</p></li>
+</ul>
 </div>
 </div>
 
@@ -280,7 +410,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='right-next' id="next-link" href="Exercises/custom_bash_job.html" title="next page">Integrating a generic, non-python tool in pyiron (Level B, recommended approach)</a>
+    <a class='left-prev' id="prev-link" href="lammps_damask_workflow/lammps-damask-workflow.html" title="previous page">Macroscopic response based on atomistic properties</a>
 
         </div>
         
