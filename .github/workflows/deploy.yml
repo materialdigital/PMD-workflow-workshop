@@ -24,6 +24,7 @@ jobs:
       run: |
         pip install git+https://github.com/ExecutableBookProject/jupyter-book
         echo "- file: README.md" > _toc.yml
+        echo "- file: opening_notebook.ipynb" >> _toc.yml
         echo "- file: intro_pyiron_building_blocks/intro.ipynb" >> _toc.yml
         echo "- file: customized_job/custom_python_job.ipynb" >> _toc.yml
         echo "- file: customized_job/custom_bash_job.ipynb" >> _toc.yml
