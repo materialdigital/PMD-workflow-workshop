@@ -54,8 +54,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Integrating a generic, python tool in pyiron (Level B, recommended approach)" href="custom_python_job.html" />
-    <link rel="prev" title="PMD workflow workshop" href="../README.html" />
+    <link rel="next" title="Macroscopic response based on atomistic properties" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html" />
+    <link rel="prev" title="Integrating a generic, python tool in pyiron (Level B, recommended approach)" href="2_0_custom_python_job.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -93,69 +93,39 @@
  </li>
 </ul>
 <ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_opening_notebook.html">
+   Hands-on session
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_intro_pyiron_building_blocks/1_intro.html">
+   First steps through pyiron
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_0_custom_python_job.html">
+   Integrating a generic, python tool in pyiron (Level B, recommended approach)
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Integrating a generic, non-python tool in pyiron (Level B, recommended approach)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="custom_python_job.html">
-   Integrating a generic, python tool in pyiron (Level B, recommended approach)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="import_project.html">
-   Importing a project
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   First steps through pyiron
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lammps-damask-workflow.html">
+  <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html">
    Macroscopic response based on atomistic properties
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="lammps-damask-workflow.html#damask-simulations">
+  <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html#damask-simulations">
    DAMASK Simulations
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../customized_job/custom_bash_job.html">
-   Integrating a generic, non-python tool in pyiron (Level B, recommended approach)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../customized_job/custom_python_job.html">
-   Integrating a generic, python tool in pyiron (Level B, recommended approach)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../data_mining/data_mining.html">
+  <a class="reference internal" href="../4_data_mining/4_data_mining.html">
    Data mining using pyiron tables
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../intro_pyiron_building_blocks/intro.html">
-   First steps through pyiron
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lammps_damask_workflow/lammps-damask-workflow.html">
-   Macroscopic response based on atomistic properties
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lammps_damask_workflow/lammps-damask-workflow.html#damask-simulations">
-   DAMASK Simulations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../opening_notebook.html">
-   Hands-on session
   </a>
  </li>
 </ul>
@@ -198,7 +168,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/Exercises/custom_bash_job.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/2_customized_job/2_1_custom_bash_job.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -223,7 +193,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/Exercises/custom_bash_job.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/2_customized_job/2_1_custom_bash_job.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -333,6 +303,33 @@
 <div class="section" id="exercise-1">
 <h2>Exercise 1:<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>using the above job class, create a project and run a job of type <code class="docutils literal notranslate"><span class="pre">ToyBashJob</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">Project</span>
+<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs_silently</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">ToyBashJob</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;toy&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">job</span><span class="p">[</span><span class="s1">&#39;output/generic/energy_tot&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Parameter  Value Comment
+0  input_energy    100        
+The job toy was saved and received the ID: 64
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
+  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -349,7 +346,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Exercises"
+            path: "./2_customized_job"
         },
         predefinedOutput: true
     }
@@ -361,8 +358,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../README.html" title="previous page">PMD workflow workshop</a>
-    <a class='right-next' id="next-link" href="custom_python_job.html" title="next page">Integrating a generic, python tool in pyiron (Level B, recommended approach)</a>
+    <a class='left-prev' id="prev-link" href="2_0_custom_python_job.html" title="previous page">Integrating a generic, python tool in pyiron (Level B, recommended approach)</a>
+    <a class='right-next' id="next-link" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html" title="next page">Macroscopic response based on atomistic properties</a>
 
         </div>
         
