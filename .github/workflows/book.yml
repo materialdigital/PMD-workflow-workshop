@@ -33,6 +33,7 @@ jobs:
         curl https://pyiron.org/images/logo_dark.png --output logo_dark.png
         bash .github/ci_support/write_book_config.sh
         rm CODE_OF_CONDUCT.md LICENSE
+        rm -r Exercises
         jupyter-book build . --path-output public
     - run: mv public/_build/html public_html
     - run: touch public_html/.nojekyll
