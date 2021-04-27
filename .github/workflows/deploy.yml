@@ -24,7 +24,11 @@ jobs:
       run: |
         pip install git+https://github.com/ExecutableBookProject/jupyter-book
         echo "- file: README.md" > _toc.yml
-        for f in $(find . -name '*.ipynb' | sort -n); do echo "- file: ${f}" >> _toc.yml; done
+        echo "- file: intro_pyiron_building_blocks/intro.ipynb" >> _toc.yml
+        echo "- file: customized_job/custom_python_job.ipynb" >> _toc.yml
+        echo "- file: customized_job/custom_bash_job.ipynb" >> _toc.yml
+        echo "- file: lammps_damask_workflow/lammps-damask-workflow.ipynb" >> _toc.yml
+        echo "- file: data_mining/data_mining.ipynb" >> _toc.yml
         curl https://pyiron.org/images/logo_dark.png --output logo_dark.png
         bash .github/ci_support/write_book_config.sh
         rm CODE_OF_CONDUCT.md LICENSE
