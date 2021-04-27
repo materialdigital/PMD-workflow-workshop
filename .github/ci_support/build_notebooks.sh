@@ -1,12 +1,14 @@
 #!/bin/bash
+current_dir=$(pwd)
+cp -r pyiron $current_dir
+cp .github/ci_support/pyironconfig.py $current_dir
 # pyiron config 
-python .github/ci_support/pyironconfig.py
+python pyironconfig.py
 
 # conda install papermill
 conda install -c conda-forge papermill
 
 # execute notebooks
-current_dir=$(pwd)
 i=0;
 for dir in $current_dir/*/ ; do 
     for f in $(find $dir -name *.ipynb | sort -n); do
