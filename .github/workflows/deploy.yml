@@ -24,10 +24,17 @@ jobs:
       run: |
         pip install git+https://github.com/ExecutableBookProject/jupyter-book
         echo "- file: README.md" > _toc.yml
-        for f in $(find . -name '*.ipynb' | sort -n); do echo "- file: ${f}" >> _toc.yml; done
+        echo "- file: 0_opening_notebook.ipynb" >> _toc.yml
+        echo "- file: 1_intro_pyiron_building_blocks/1_intro.ipynb" >> _toc.yml
+        echo "- file: 2_customized_job/2_0_custom_python_job.ipynb" >> _toc.yml
+        echo "- file: 2_customized_job/2_1_custom_bash_job.ipynb" >> _toc.yml
+        echo "- file: 3_lammps_damask_workflow/3_lammps-damask-workflow.ipynb" >> _toc.yml
+        echo "- file: 4_data_mining/4_data_mining.ipynb" >> _toc.yml
+        cat _toc.yml
         curl https://pyiron.org/images/logo_dark.png --output logo_dark.png
         bash .github/ci_support/write_book_config.sh
         rm CODE_OF_CONDUCT.md LICENSE
+        rm -r Exercises
         jupyter-book build . --path-output public
     - run: mv public/_build/html public_html
     - run: touch public_html/.nojekyll
