@@ -9,7 +9,7 @@ python pyironconfig.py
 conda install -c conda-forge papermill
 
 # execute notebooks
-exercise_dir=$current_dir/exercise_notebooks/
+exercise_dir=$current_dir/Exercises/
 i=0;
 for dir in $current_dir/*/ ; do 
     if [ $dir != $exercise_dir ] ; then
