@@ -1,39 +1,27 @@
 {
-    "Mendatory": {
-        "workflow_environment":"pyiron/simstack",
-        "label": "label of the workflow",
-        "authors": {
-            "author1":"email_address",
-            "author2":"email_address"
-        },
-        "description": "description of what the workflow does",
-        "release": {
-            "latest_release_date": "e.g., 2021-04-07",
-            "latest_release_tag": "e.g., 0.0.1"
-        },
-        "keywords": [
-            "keyword1",
-            "keyword2"
-        ],
-        "categories":[
-            "category1, e.g., continuum/atomistics/experimental",
-            "catergory2, e.g., continuum/atomistics/experimental"
-        ],
-        "steps/codes":[
-            "step1, e.g., calculation of elastic modulus",
-            "code1, e.g., LAMMPS",
-            "step2, e.g., macroscopic response",
-            "code2, e.g., DAMASK"
-        ]
+    "workflow_environment":"pyiron",
+    "label": "PMD_onboarding_workshop",
+    "authors": {
+        "Muhammad Hassani":"hassani@mpie.de",
     },
-    "Optional": {
-        "license": {
-            "softwar1": "license1",
-            "software2": "license2"
-        },
-        "publication": [
-            "publication1",
-            "publication2"
-        ]
-    }
+    "description": "The pyiron workflows presented in PMD onboarding workshop, 2021-04-29",
+    "release": {
+        "latest_release_date": "2021-04-29",
+        "latest_release_tag": "0.0.1"
+    },
+    "keywords": [
+        "pyiron",
+        "workshop",
+        "workflows"
+    ],
+    "categories":[
+        "continuum",
+        "atomistics"
+    ],
+    "steps/codes":[
+        "calculation of elastic modulus",
+        "LAMMPS",
+        "Macroscopic response",
+        "DAMASK"
+    ]
 }
