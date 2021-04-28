@@ -100,7 +100,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1_1_intro_pyiron_building_blocks/1_1_intro.html">
-   First steps through pyiron
+   Introduction to pyiron workflows
   </a>
  </li>
  <li class="toctree-l1">
@@ -121,11 +121,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html">
    Macroscopic response based on atomistic properties
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html#damask-simulations">
-   DAMASK Simulations
   </a>
  </li>
  <li class="toctree-l1">
@@ -225,11 +220,6 @@
    Exercise 1:
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercise-2">
-   Exercise 2:
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -244,25 +234,60 @@
                 
   <div class="section" id="integrating-a-generic-python-tool-in-pyiron-level-b-recommended-approach">
 <h1>Integrating a generic, python tool in pyiron (Level B, recommended approach)<a class="headerlink" href="#integrating-a-generic-python-tool-in-pyiron-level-b-recommended-approach" title="Permalink to this headline">¶</a></h1>
-<p>To integrate a new python tool into pyiron, one needs to create a pyiron job class, which is inherited from pyiron generic job class: <code class="docutils literal notranslate"><span class="pre">PythonTemplateJob</span></code></p>
+<p>If we need to repeatedly, perform a combination of processes to return a value, a plot, etc., it might make sense to create a Job class for it. Here, we create a simple workflow using available python tools for a specific problem.</p>
+<p>Problem:
+we are given as an input the positions of a some particles, plus a energy constant.<br />
+the goal of the workflow:</p>
+<ul class="simple">
+<li><p>calculate the mean harmonic energy</p></li>
+<li><p>return a 3D plot of the cloud of particles.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">PythonTemplateJob</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">PythonTemplateJob</span><span class="p">,</span> <span class="n">DataContainer</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ToyPythonJob</span><span class="p">(</span><span class="n">PythonTemplateJob</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">harmonicEnergy</span><span class="p">(</span><span class="n">PythonTemplateJob</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ToyPythonJob</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span> 
-        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s1">&#39;input_energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">harmonicEnergy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">=</span><span class="n">DataContainer</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="s1">&#39;inputs&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">read_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     
+    <span class="k">def</span> <span class="nf">calc_mean_harmonic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">counter</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">d2</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">p1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">p2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">p2_vec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+                <span class="n">p1_vec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">p2_vec</span> <span class="o">-</span> <span class="n">p1_vec</span>
+                <span class="n">d2</span><span class="o">+=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+                <span class="n">counter</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_d2</span><span class="o">=</span><span class="n">d2</span><span class="o">/</span><span class="n">counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_energy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">energy_constant</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">avg_d2</span>
+    
+    <span class="k">def</span> <span class="nf">scatter_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()))]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()))]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">to_builtin</span><span class="p">()))]</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
     <span class="c1"># This function is executed </span>
     <span class="k">def</span> <span class="nf">run_static</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc_mean_harmonic_energy</span><span class="p">()</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_hdf5</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;output/generic&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5out</span><span class="p">:</span> 
-             <span class="n">h5out</span><span class="p">[</span><span class="s2">&quot;energy_tot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s2">&quot;input_energy&quot;</span><span class="p">]</span>
+             <span class="n">h5out</span><span class="p">[</span><span class="s2">&quot;avg_harmonic_energy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avg_energy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
@@ -270,51 +295,151 @@
 </div>
 <div class="section" id="exercise-1">
 <h2>Exercise 1:<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Create a project, which includes a job of type <code class="docutils literal notranslate"><span class="pre">ToyPythonJob</span></code></p>
+<p>Create a project and a job of type harmonicEnergy, which reads in <code class="docutils literal notranslate"><span class="pre">input.yml</span></code> and calculates the mean harmonic energy. Also create the 3d scatter plot of the particles.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">Project</span>
-<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">pr</span><span class="o">=</span><span class="n">Project</span><span class="p">(</span><span class="s2">&quot;python_demo&quot;</span><span class="p">)</span>
 <span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs_silently</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">ToyPythonJob</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;toy&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
-<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function JobCore.__del__ at 0x7ff13c4d1a60&gt;
-Traceback (most recent call last):
-  File &quot;/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/job/core.py&quot;, line 851, in __del__
-    del self._name
-AttributeError: _name
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Parameter  Value Comment
-0  input_energy    100        
-The job toy was saved and received the ID: 70
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h2>Exercise 2:<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>How to access the <code class="docutils literal notranslate"><span class="pre">energy_tot</span></code> from the output of the job.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;output/generic/energy_tot&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">=</span><span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">harmonicEnergy</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s1">&#39;harmonic_energy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">read_input</span><span class="p">(</span><span class="s1">&#39;input.yml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job harmonic_energy was saved and received the ID: 97
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">input</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DataContainer({&#39;energy_constant&#39;: 0.1, &#39;positions&#39;: DataContainer([DataContainer([3.137544466813198, -1.980814354656597, -4.197124310786901]), DataContainer([-2.6890042295246017, 1.8501549920906113, 0.023231338665228307]), DataContainer([-0.21694792294922394, 4.52462902567602, 4.747091691273553]), DataContainer([-1.3730328920596602, 3.345133072507805, -2.3966747431507196]), DataContainer([2.7537916983387056, 1.6128594035836397, 4.1022385836569]), DataContainer([-4.670628783489295, -3.4027456446008153, -1.2682900977875233]), DataContainer([-0.024009392615576886, -0.7000473804666187, 0.2955825557994345]), DataContainer([3.8025392209805897, -4.370649970003432, -0.20762411583497542]), DataContainer([-2.788465316883393, 4.449722862556019, -3.1178268869918546]), DataContainer([2.4406679645582585, -0.2785484738255857, -2.6818032676754067]), DataContainer([-4.11093749753287, 4.011545224548557, -2.570528164948338]), DataContainer([-3.90282132805013, -3.629025741377605, 3.5767107804003277]), DataContainer([-0.6603668770271973, -0.3738802422299585, -4.474830175227286]), DataContainer([-3.599320542923353, -3.2866771577781995, 1.6203959332493252]), DataContainer([-3.254427885686062, -4.83684975815674, -3.050720157376998]), DataContainer([4.559778458092227, 3.3162849367287706, 0.8296556544285298]), DataContainer([-1.3771992590308124, -3.314388219124896, -4.868978060931331]), DataContainer([-0.7667646728476152, -3.634026833467291, -3.557807258303818]), DataContainer([-3.840032170008806, -2.371455901138173, -0.8652606412581676]), DataContainer([2.450467252735109, 1.5039459711659404, 1.5965086685722971]), DataContainer([1.0665140929839154, 1.933109799659988, 2.873831669544165]), DataContainer([4.557345443186108, 0.6008966725808573, -4.546943944719759]), DataContainer([1.304244805099275, -3.6588428501055805, 2.6354386977288655]), DataContainer([4.127633873431494, 4.153622577255408, 0.19760967659106043]), DataContainer([4.24818439306128, 3.0106421564274797, -2.21056252879802]), DataContainer([4.9603663224278876, -3.0114336940398467, -3.5017132143213905]), DataContainer([-1.096816080720917, 4.748295541176644, -0.7475030725732985]), DataContainer([3.486410382195457, 2.799878737647451, 0.03875730664732213]), DataContainer([-1.0861463281898032, 2.0753437593040793, -1.5079869060271447]), DataContainer([-3.626802831170436, -0.4060441273874451, -2.1490167201721935])])})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>97</td>
+      <td>finished</td>
+      <td>None</td>
+      <td>harmonic_energy</td>
+      <td>/harmonic_energy</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/2_customized_job/python_demo/</td>
+      <td>2021-04-29 00:09:34.229617</td>
+      <td>None</td>
+      <td>None</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>harmonicEnergy</td>
+      <td>0.4</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;groups&#39;: [&#39;input&#39;, &#39;output&#39;], &#39;nodes&#39;: [&#39;HDF_VERSION&#39;, &#39;NAME&#39;, &#39;TYPE&#39;, &#39;VERSION&#39;, &#39;server&#39;, &#39;status&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;output/generic/avg_harmonic_energy&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.41861339242472
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">scatter_plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_0_custom_python_job_12_0.png" src="../_images/2_0_custom_python_job_12_0.png" />
 </div>
 </div>
 </div>

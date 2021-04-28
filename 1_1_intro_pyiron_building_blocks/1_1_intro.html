@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>First steps through pyiron &#8212; PMD-workflow-workshop</title>
+    <title>Introduction to pyiron workflows &#8212; PMD-workflow-workshop</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -102,7 +102,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   First steps through pyiron
+   Introduction to pyiron workflows
   </a>
  </li>
  <li class="toctree-l1">
@@ -123,11 +123,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html">
    Macroscopic response based on atomistic properties
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../3_lammps_damask_workflow/3_lammps-damask-workflow.html#damask-simulations">
-   DAMASK Simulations
   </a>
  </li>
  <li class="toctree-l1">
@@ -269,9 +264,10 @@
         
               <div>
                 
-  <div class="section" id="first-steps-through-pyiron">
-<h1>First steps through pyiron<a class="headerlink" href="#first-steps-through-pyiron" title="Permalink to this headline">¶</a></h1>
-<p>This section gives a brief introduction about fundamental concepts of pyiron and how they can be used to setup, run and analyze atomic simulations. As a first step we import the libraries <a class="reference external" href="http://www.numpy.org/">numpy</a> for data analysis and <a class="reference external" href="https://matplotlib.org/">matplotlib</a> for visualization.</p>
+  <div class="section" id="introduction-to-pyiron-workflows">
+<h1>Introduction to pyiron workflows<a class="headerlink" href="#introduction-to-pyiron-workflows" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, you will learn about different pyiron objects which acts as blocks of a building to complete a workflow. Here, we use a simulation workflow using lammps, but the features introduced here, as will be shown, are generic to other simulation/analysis tools.</p>
+<p>As a first step we import the libraries <a class="reference external" href="http://www.numpy.org/">numpy</a> for data analysis and <a class="reference external" href="https://matplotlib.org/">matplotlib</a> for visualization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -305,6 +301,13 @@
 <p>For this basic simulation example we construct an fcc Al crystal in a cubic supercell (<code class="docutils literal notranslate"><span class="pre">cubic=True</span></code>). For more details on generating structures, please have a look at our <span class="xref myst">structures example</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">ase</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="n">cubic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_ase_bulk</span><span class="p">(</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="n">cubic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">supercell_3x3x3</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="n">supercell_3x3x3</span><span class="o">.</span><span class="n">plot3d</span><span class="p">()</span>
@@ -313,16 +316,16 @@
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "614e6a40c5ab4f7495be55e0a831dfb9", "version_major": 2, "version_minor": 0}
+{"model_id": "bbfeef97e91d4da6b68d8a08e00bac7b", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "59c0243c02594c57820b547f5795d908", "version_major": 2, "version_minor": 0}
+{"model_id": "81572aa1db614da3a3c6f25d980979e4", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <p>Here <code class="docutils literal notranslate"><span class="pre">create_ase_bulk</span></code> uses the <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/build/build.html">ASE bulk module</a>. The structure can be modified - here we extend the original cell to a 3x3x3 supercell (<code class="docutils literal notranslate"><span class="pre">repeat([3,</span> <span class="pre">3,</span> <span class="pre">3]</span></code>). Finally, we plot the structure using <a class="reference external" href="http://nglviewer.org/nglview/latest/api.html">NGlview</a>.</p>
 <p>The project object allows to create various simulation job types. Here, we create a LAMMPS job.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">pr</span><span class="o">.</span><span class="n">job_type</span><span class="o">.</span><span class="n">Lammps</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s1">&#39;Al_T800K&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">Lammps</span><span class="p">(</span><span class="n">job_name</span><span class="o">=</span><span class="s1">&#39;Al_T800K&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -489,15 +492,106 @@
 <p>To run the LAMMPS simulation (locally) we now simply use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job.server.core=2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#job.server.queue=</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-04-27 03:05:46,815 - pyiron_log - WARNING - The job Al_T800K is being loaded instead of running. To re-run use the argument &#39;delete_existing_job=True in create_job&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job Al_T800K was saved and received the ID: 96
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">executable</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/home/muhammad/miniconda3/envs/workshop_test/share/pyiron/lammps/bin/run_lammps_2020.03.03.sh&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>96</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T800K</td>
+      <td>/Al_T800K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/1_1_intro_pyiron_building_blocks/first_steps/</td>
+      <td>2021-04-28 23:47:01.459433</td>
+      <td>2021-04-28 23:47:03.734065</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 <div class="section" id="analyze-the-calculation">
@@ -553,7 +647,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1_1_intro_32_0.png" src="../_images/1_1_intro_32_0.png" />
+<img alt="../_images/1_1_intro_41_0.png" src="../_images/1_1_intro_41_0.png" />
 </div>
 </div>
 </div>
@@ -576,7 +670,7 @@ pos = ?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1_1_intro_34_0.png" src="../_images/1_1_intro_34_0.png" />
+<img alt="../_images/1_1_intro_45_0.png" src="../_images/1_1_intro_45_0.png" />
 </div>
 </div>
 </div>
@@ -686,7 +780,7 @@ The temperature must be in the range, 200K&lt;T&lt;1200K, with increment of 200K
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1_1_intro_45_0.png" src="../_images/1_1_intro_45_0.png" />
+<img alt="../_images/1_1_intro_56_0.png" src="../_images/1_1_intro_56_0.png" />
 </div>
 </div>
 </div>
@@ -914,7 +1008,7 @@ Interatomic potential used:  Al_H_Ni_Angelo_eam
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1_1_intro_60_0.png" src="../_images/1_1_intro_60_0.png" />
+<img alt="../_images/1_1_intro_71_0.png" src="../_images/1_1_intro_71_0.png" />
 </div>
 </div>
 </div>

@@ -100,7 +100,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../1_1_intro_pyiron_building_blocks/1_1_intro.html">
-   First steps through pyiron
+   Introduction to pyiron workflows
   </a>
  </li>
  <li class="toctree-l1">
@@ -121,11 +121,6 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Macroscopic response based on atomistic properties
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#damask-simulations">
-   DAMASK Simulations
   </a>
  </li>
  <li class="toctree-l1">
@@ -220,64 +215,92 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Macroscopic response based on atomistic properties
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#concentration-dependent-elastic-constants">
+   Concentration dependent elastic constants
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-calculation">
+   Run the calculation
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#concentration-dependent-elastic-constants">
-     Concentration dependent elastic constants
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#minimize-the-structure-for-a-pure-al-cubic-cell">
+     Minimize the structure for a pure
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Al
+      </span>
+     </code>
+     cubic cell
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#run-the-calculation">
-     Run the calculation
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-quasirandom-structure-based-on-the-minimized-al-structure">
+     Creating quasirandom structure based on the minimized Al structure
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#post-processing-the-data">
-     post-processing the data
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#analysis">
-     Analysis
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-elasticmatrixjob">
+     Creating ElasticMatrixJob
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#post-processing-the-data">
+   post-processing the data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filtering-jobs">
+     filtering jobs
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#obtaining-elastic-moduli">
+   Obtaining elastic moduli
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#damask-simulations">
    DAMASK Simulations
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#exercise">
      Exercise:
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#post-processing-damask-simulations">
-     Post-processing DAMASK simulations
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#post-processing-damask-simulations">
+   Post-processing DAMASK simulations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#von-mises-stress">
+     Von-Mises Stress
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualization">
-     Visualization
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stress-strain-curve">
+     Stress-strain curve
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#von-mises-stress">
-       Von-Mises Stress
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#stress-strain-curve">
-       Stress-strain curve
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
@@ -333,7 +356,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;elastic_pipeline&#39;</span><span class="p">)</span>
-<span class="c1"># pr.remove_jobs_silently(recursive=True)</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs_silently</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -342,7 +365,8 @@
 <div class="section" id="run-the-calculation">
 <h2>Run the calculation<a class="headerlink" href="#run-the-calculation" title="Permalink to this headline">¶</a></h2>
 <p>Our test system will be Al with dilute Mg (up to 2%). Here we define the reference jobs, give our desired compositions.</p>
-<p>Feedback on the most user-friendly way to take chemical composition input (while still being fully flexible in allowed compositions!) is welcome – this code is still in development.</p>
+<div class="section" id="minimize-the-structure-for-a-pure-al-cubic-cell">
+<h3>Minimize the structure for a pure <code class="docutils literal notranslate"><span class="pre">Al</span></code> cubic cell<a class="headerlink" href="#minimize-the-structure-for-a-pure-al-cubic-cell" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmp_mini</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">job_type</span><span class="o">.</span><span class="n">Lammps</span><span class="p">,</span> <span class="s1">&#39;lammps_mini&#39;</span><span class="p">)</span>
@@ -354,15 +378,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job lammps_mini was saved and received the ID: 71
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job lammps_mini was saved and received the ID: 98
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="creating-quasirandom-structure-based-on-the-minimized-al-structure">
+<h3>Creating quasirandom structure based on the minimized Al structure<a class="headerlink" href="#creating-quasirandom-structure-based-on-the-minimized-al-structure" title="Permalink to this headline">¶</a></h3>
+<p>Based on a given concentration of <code class="docutils literal notranslate"><span class="pre">Mg</span></code>, quasirandom structure for the given composition of <code class="docutils literal notranslate"><span class="pre">Al</span></code> and <code class="docutils literal notranslate"><span class="pre">Mg</span></code> is created.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqs_job_al</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
@@ -384,20 +408,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job master_al was saved and received the ID: 72
-The job sqs_0_005 was saved and received the ID: 73
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job master_al was saved and received the ID: 99
+The job sqs_0_005 was saved and received the ID: 100
 Mole fractions were corrected to: {&#39;Mg&#39;: 0.004, &#39;Al&#39;: 0.996}
 Threads used: 1
-The job sqs_0_01 was saved and received the ID: 74
+The job sqs_0_01 was saved and received the ID: 101
 Threads used: 1
-The job sqs_0_015 was saved and received the ID: 75
+The job sqs_0_015 was saved and received the ID: 102
 Mole fractions were corrected to: {&#39;Mg&#39;: 0.016, &#39;Al&#39;: 0.984}
 Threads used: 1
-The job sqs_0_02 was saved and received the ID: 76
+The job sqs_0_02 was saved and received the ID: 103
 Threads used: 1
 </pre></div>
 </div>
@@ -429,6 +449,10 @@ Threads used: 1
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="creating-elasticmatrixjob">
+<h3>Creating ElasticMatrixJob<a class="headerlink" href="#creating-elasticmatrixjob" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ElasticMatrixJob</span></code> runs underneath several lammps jobs to determine the elastic constant for the given structure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">structure_lst</span><span class="p">:</span>
@@ -448,37 +472,32 @@ Threads used: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job elastic_Al500 was saved and received the ID: 77
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:374: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job elastic_Al500_lammps_tmp was saved and received the ID: 78
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job elastic_Al500 was saved and received the ID: 104
+The job elastic_Al500_lammps_tmp was saved and received the ID: 105
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_atomistics/lammps/interactive.py:375: UserWarning: Warning: setting upper trangular matrix might slow down the calculation
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job elastic_Al498Mg2 was saved and received the ID: 79
-The job elastic_Al498Mg2_lammps_tmp was saved and received the ID: 80
-The job elastic_Al495Mg5 was saved and received the ID: 81
-The job elastic_Al495Mg5_lammps_tmp was saved and received the ID: 82
-The job elastic_Al492Mg8 was saved and received the ID: 83
-The job elastic_Al492Mg8_lammps_tmp was saved and received the ID: 84
-The job elastic_Al490Mg10 was saved and received the ID: 85
-The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job elastic_Al498Mg2 was saved and received the ID: 106
+The job elastic_Al498Mg2_lammps_tmp was saved and received the ID: 107
+The job elastic_Al495Mg5 was saved and received the ID: 108
+The job elastic_Al495Mg5_lammps_tmp was saved and received the ID: 109
+The job elastic_Al492Mg8 was saved and received the ID: 110
+The job elastic_Al492Mg8_lammps_tmp was saved and received the ID: 111
+The job elastic_Al490Mg10 was saved and received the ID: 112
+The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 113
 </pre></div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="post-processing-the-data">
 <h2>post-processing the data<a class="headerlink" href="#post-processing-the-data" title="Permalink to this headline">¶</a></h2>
-<p>The output of the job is stored to HDF5. To verify this, and since the actual calculation may be done at a different time than the results are analyzed, we demonstrate this by loading the job.</p>
-<p>There is also a little bit of annoying post-processing to get it all formatted as nice numpy arrays. Some of this is reasonable (like the need to explicitly add 0% Mg to the first chemistry – we wouldn’t want to list <em>everything that’s not there</em>!), some is “not my fault” (like the way the InputList class mangles our chemistry dictionary on saving it to HDF), and some needs nicer helper functions in the future (like the ability to explicity ask for “C12” and get it by that string).</p>
+<p>A very useful, datamining tool in pyiron is pyiron tables. They can search through the jobs and filter based on the query the necessary information in the form of a table.</p>
+<p>First, let’s take a look at the job table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
@@ -524,15 +543,15 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
   <tbody>
     <tr>
       <th>0</th>
-      <td>71</td>
+      <td>98</td>
       <td>finished</td>
       <td>Al500</td>
       <td>lammps_mini</td>
       <td>/lammps_mini</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:41.427028</td>
-      <td>2021-04-27 04:35:41.794385</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:39:45.740226</td>
+      <td>2021-04-29 00:39:46.235415</td>
       <td>0.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
@@ -542,16 +561,16 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>1</th>
-      <td>72</td>
+      <td>99</td>
       <td>finished</td>
       <td>Al500</td>
       <td>master_al</td>
       <td>/master_al</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:42.608390</td>
-      <td>2021-04-27 04:35:45.513532</td>
-      <td>2.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:39:47.199526</td>
+      <td>2021-04-29 00:39:50.651729</td>
+      <td>3.0</td>
       <td>pyiron@cmleo14#1#4/4</td>
       <td>SQSMaster</td>
       <td>0.0.1</td>
@@ -560,88 +579,88 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>2</th>
-      <td>73</td>
+      <td>100</td>
       <td>finished</td>
       <td>Al498Mg2</td>
       <td>sqs_0_005</td>
       <td>/sqs_0_005</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
-      <td>2021-04-27 04:35:42.973627</td>
-      <td>2021-04-27 04:35:43.348272</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
+      <td>2021-04-29 00:39:47.599948</td>
+      <td>2021-04-29 00:39:48.075268</td>
       <td>0.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>SQSJob</td>
       <td>0.1</td>
       <td>None</td>
-      <td>72.0</td>
+      <td>99.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>74</td>
+      <td>101</td>
       <td>finished</td>
       <td>Al495Mg5</td>
       <td>sqs_0_01</td>
       <td>/sqs_0_01</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
-      <td>2021-04-27 04:35:43.640335</td>
-      <td>2021-04-27 04:35:44.017782</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
+      <td>2021-04-29 00:39:48.427215</td>
+      <td>2021-04-29 00:39:48.870143</td>
       <td>0.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>SQSJob</td>
       <td>0.1</td>
       <td>None</td>
-      <td>72.0</td>
+      <td>99.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>75</td>
+      <td>102</td>
       <td>finished</td>
       <td>Al492Mg8</td>
       <td>sqs_0_015</td>
       <td>/sqs_0_015</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
-      <td>2021-04-27 04:35:44.324987</td>
-      <td>2021-04-27 04:35:44.689932</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
+      <td>2021-04-29 00:39:49.232829</td>
+      <td>2021-04-29 00:39:49.687223</td>
       <td>0.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>SQSJob</td>
       <td>0.1</td>
       <td>None</td>
-      <td>72.0</td>
+      <td>99.0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>76</td>
+      <td>103</td>
       <td>finished</td>
       <td>Al490Mg10</td>
       <td>sqs_0_02</td>
       <td>/sqs_0_02</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
-      <td>2021-04-27 04:35:45.073590</td>
-      <td>2021-04-27 04:35:45.490324</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/master_al_hdf5/</td>
+      <td>2021-04-29 00:39:50.049933</td>
+      <td>2021-04-29 00:39:50.634892</td>
       <td>0.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>SQSJob</td>
       <td>0.1</td>
       <td>None</td>
-      <td>72.0</td>
+      <td>99.0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>77</td>
+      <td>104</td>
       <td>finished</td>
       <td>Al500</td>
       <td>elastic_Al500</td>
       <td>/elastic_Al500</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:49.001319</td>
-      <td>2021-04-27 04:35:52.225546</td>
-      <td>3.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:39:55.202153</td>
+      <td>2021-04-29 00:39:59.327718</td>
+      <td>4.0</td>
       <td>pyiron@cmleo14#1#0</td>
       <td>ElasticMatrixJob</td>
       <td>0.0.1</td>
@@ -650,34 +669,34 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>7</th>
-      <td>78</td>
+      <td>105</td>
       <td>finished</td>
       <td>Al500</td>
       <td>elastic_Al500_lammps_tmp</td>
       <td>/elastic_Al500_lammps_tmp</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:49.489251</td>
-      <td>2021-04-27 04:35:51.531004</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:39:55.967242</td>
+      <td>2021-04-29 00:39:58.445134</td>
       <td>2.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
       <td>0.1</td>
       <td>None</td>
-      <td>77.0</td>
+      <td>104.0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>79</td>
+      <td>106</td>
       <td>finished</td>
       <td>Al498Mg2</td>
       <td>elastic_Al498Mg2</td>
       <td>/elastic_Al498Mg2</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:52.959067</td>
-      <td>2021-04-27 04:36:07.443211</td>
-      <td>14.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:40:00.037555</td>
+      <td>2021-04-29 00:40:18.600354</td>
+      <td>18.0</td>
       <td>pyiron@cmleo14#1#0</td>
       <td>ElasticMatrixJob</td>
       <td>0.0.1</td>
@@ -686,34 +705,34 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>9</th>
-      <td>80</td>
+      <td>107</td>
       <td>finished</td>
       <td>Al498Mg2</td>
       <td>elastic_Al498Mg2_lammps_tmp</td>
       <td>/elastic_Al498Mg2_lammps_tmp</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:35:53.460018</td>
-      <td>2021-04-27 04:36:06.930567</td>
-      <td>13.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:40:00.500052</td>
+      <td>2021-04-29 00:40:17.934727</td>
+      <td>17.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
       <td>0.1</td>
       <td>None</td>
-      <td>79.0</td>
+      <td>106.0</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>81</td>
+      <td>108</td>
       <td>finished</td>
       <td>Al495Mg5</td>
       <td>elastic_Al495Mg5</td>
       <td>/elastic_Al495Mg5</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:36:10.141613</td>
-      <td>2021-04-27 04:36:39.398497</td>
-      <td>29.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:40:22.721718</td>
+      <td>2021-04-29 00:40:57.110507</td>
+      <td>34.0</td>
       <td>pyiron@cmleo14#1#0</td>
       <td>ElasticMatrixJob</td>
       <td>0.0.1</td>
@@ -722,34 +741,34 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>11</th>
-      <td>82</td>
+      <td>109</td>
       <td>finished</td>
       <td>Al495Mg5</td>
       <td>elastic_Al495Mg5_lammps_tmp</td>
       <td>/elastic_Al495Mg5_lammps_tmp</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:36:10.856955</td>
-      <td>2021-04-27 04:36:38.621889</td>
-      <td>27.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:40:23.541115</td>
+      <td>2021-04-29 00:40:56.249995</td>
+      <td>32.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
       <td>0.1</td>
       <td>None</td>
-      <td>81.0</td>
+      <td>108.0</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>83</td>
+      <td>110</td>
       <td>finished</td>
       <td>Al492Mg8</td>
       <td>elastic_Al492Mg8</td>
       <td>/elastic_Al492Mg8</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:36:46.723710</td>
-      <td>2021-04-27 04:37:21.846040</td>
-      <td>35.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:41:04.401548</td>
+      <td>2021-04-29 00:41:38.212428</td>
+      <td>33.0</td>
       <td>pyiron@cmleo14#1#0</td>
       <td>ElasticMatrixJob</td>
       <td>0.0.1</td>
@@ -758,34 +777,34 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>13</th>
-      <td>84</td>
+      <td>111</td>
       <td>finished</td>
       <td>Al492Mg8</td>
       <td>elastic_Al492Mg8_lammps_tmp</td>
       <td>/elastic_Al492Mg8_lammps_tmp</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:36:47.791155</td>
-      <td>2021-04-27 04:37:21.042373</td>
-      <td>33.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:41:05.156680</td>
+      <td>2021-04-29 00:41:37.485178</td>
+      <td>32.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
       <td>0.1</td>
       <td>None</td>
-      <td>83.0</td>
+      <td>110.0</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>85</td>
+      <td>112</td>
       <td>finished</td>
       <td>Al490Mg10</td>
       <td>elastic_Al490Mg10</td>
       <td>/elastic_Al490Mg10</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:37:32.404698</td>
-      <td>2021-04-27 04:38:06.351290</td>
-      <td>33.0</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:41:49.242406</td>
+      <td>2021-04-29 00:42:23.309427</td>
+      <td>34.0</td>
       <td>pyiron@cmleo14#1#0</td>
       <td>ElasticMatrixJob</td>
       <td>0.0.1</td>
@@ -794,26 +813,29 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
     </tr>
     <tr>
       <th>15</th>
-      <td>86</td>
+      <td>113</td>
       <td>finished</td>
       <td>Al490Mg10</td>
       <td>elastic_Al490Mg10_lammps_tmp</td>
       <td>/elastic_Al490Mg10_lammps_tmp</td>
       <td>/home/muhammad/</td>
-      <td>workspace/tmp/PMD-workflow-workshop/lammps_damask_workflow/elastic_pipeline/</td>
-      <td>2021-04-27 04:37:33.114138</td>
-      <td>2021-04-27 04:38:05.480685</td>
+      <td>workspace/tmp/PMD-workflow-workshop2/3_lammps_damask_workflow/elastic_pipeline/</td>
+      <td>2021-04-29 00:41:50.149249</td>
+      <td>2021-04-29 00:42:22.453847</td>
       <td>32.0</td>
       <td>pyiron@cmleo14#1</td>
       <td>Lammps</td>
       <td>0.1</td>
       <td>None</td>
-      <td>85.0</td>
+      <td>112.0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<div class="section" id="filtering-jobs">
+<h3>filtering jobs<a class="headerlink" href="#filtering-jobs" title="Permalink to this headline">¶</a></h3>
+<p>By the <code class="docutils literal notranslate"><span class="pre">filter_function</span></code>, from the <code class="docutils literal notranslate"><span class="pre">pr.job_table()</span></code> we filter the jobs with name <code class="docutils literal notranslate"><span class="pre">elastic_*</span></code> and not the template lammps jobs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_function</span><span class="p">(</span><span class="n">job</span><span class="p">):</span> 
@@ -822,6 +844,11 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="obtaining-elastic-moduli">
+<h2>Obtaining elastic moduli<a class="headerlink" href="#obtaining-elastic-moduli" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">get_c11</span></code>, <code class="docutils literal notranslate"><span class="pre">get_c12</span></code> and <code class="docutils literal notranslate"><span class="pre">get_c44</span></code> functions, look into the queried jobs of the <code class="docutils literal notranslate"><span class="pre">filter_function</span></code> and obtain the elastic moduli from the jobs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_c11</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
@@ -860,14 +887,14 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 17/17 [00:00&lt;00:00, 807.84it/s]
-  0%|          | 0/5 [00:00&lt;?, ?it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 17/17 [00:00&lt;00:00, 960.89it/s]
+ 20%|██        | 1/5 [00:00&lt;00:00,  8.98it/s]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job table was saved and received the ID: 87
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job table was saved and received the ID: 114
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 5/5 [00:01&lt;00:00,  2.54it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 5/5 [00:01&lt;00:00,  3.00it/s]
 </pre></div>
 </div>
 </div>
@@ -907,38 +934,38 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
   <tbody>
     <tr>
       <th>0</th>
-      <td>77</td>
+      <td>104</td>
       <td>110.193270</td>
       <td>61.752630</td>
       <td>32.746691</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>79</td>
-      <td>111.881629</td>
-      <td>62.846036</td>
-      <td>33.245243</td>
+      <td>106</td>
+      <td>111.879613</td>
+      <td>62.840538</td>
+      <td>33.243125</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>81</td>
-      <td>112.935636</td>
-      <td>64.567046</td>
-      <td>34.081611</td>
+      <td>108</td>
+      <td>113.043400</td>
+      <td>64.484805</td>
+      <td>34.110036</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>83</td>
-      <td>114.968614</td>
-      <td>66.091192</td>
-      <td>34.989016</td>
+      <td>110</td>
+      <td>114.186882</td>
+      <td>66.304002</td>
+      <td>34.947656</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>85</td>
-      <td>115.288809</td>
-      <td>66.918054</td>
-      <td>35.500340</td>
+      <td>112</td>
+      <td>115.628680</td>
+      <td>67.263743</td>
+      <td>35.473180</td>
     </tr>
   </tbody>
 </table>
@@ -948,7 +975,7 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 <div class="section" id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
 <p>Finally, let’s use numpy to make a polynomial fit of our elastic constants to alloying concentration and visualize the results.</p>
-<p>Note: pure-Al data lines up very nicely with the pure Al elastic constants <a class="reference external" href="https://www.ctcms.nist.gov/potentials/entry/2009--Mendelev-M-I-Asta-M-Rahman-M-J-Hoyt-J-J--Al-Mg/2009--Mendelev-M-I--Al-Mg--LAMMPS--ipr1.html">reported on the NIST website for this potential</a>. I don’t have a good sense for exactly what &lt;2% Mg should be doing, but at least there are no sharp changes. Sanity check passed.</p>
+<p>Note: pure-Al data lines up very nicely with the pure Al elastic constants <a class="reference external" href="https://www.ctcms.nist.gov/potentials/entry/2009--Mendelev-M-I-Asta-M-Rahman-M-J-Hoyt-J-J--Al-Mg/2009--Mendelev-M-I--Al-Mg--LAMMPS--ipr1.html">reported on the NIST website for this potential</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concentrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">concentration_lst</span><span class="p">)</span>
@@ -986,9 +1013,9 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-5021.01643529   365.98162764   110.14692783]
-[-2085.57389766   313.23158944    61.61551181]
-[275.94536939 139.50250921  32.67616301]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-1455.41215732   292.67002594   110.27798032]
+[-232.58951752  294.36557718   61.62037628]
+[ 82.53942106 141.49939749  32.67676254]
 </pre></div>
 </div>
 </div>
@@ -1011,13 +1038,12 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3_lammps-damask-workflow_24_0.png" src="../_images/3_lammps-damask-workflow_24_0.png" />
-</div>
+<img alt="../_images/3_lammps-damask-workflow_29_0.png" src="../_images/3_lammps-damask-workflow_29_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="damask-simulations">
-<h1>DAMASK Simulations<a class="headerlink" href="#damask-simulations" title="Permalink to this headline">¶</a></h1>
+<h2>DAMASK Simulations<a class="headerlink" href="#damask-simulations" title="Permalink to this headline">¶</a></h2>
 <p>The steps include, defining:</p>
 <ul class="simple">
 <li><p>geometries</p></li>
@@ -1044,7 +1070,7 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 <div class="section" id="exercise">
-<h2>Exercise:<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<h3>Exercise:<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
 <p>In order to create DAMASK jobs for the given number of concentration, please fill in the missing line.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1062,13 +1088,10 @@ The job elastic_Al490Mg10_lammps_tmp was saved and received the ID: 86
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job damask_mg_0 was saved and received the ID: 115
+The job damask_mg_2 was saved and received the ID: 116
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The job damask_mg_0 was saved and received the ID: 88
-The job damask_mg_2 was saved and received the ID: 89
-</pre></div>
 </div>
 </div>
 </div>
@@ -1160,11 +1183,11 @@ The job damask_mg_2 was saved and received the ID: 89
 </td><td>
 <table>
 <tr><th>Name</th><th>Field</th><th>Type</th><th>N Comp</th><th>Min</th><th>Max</th></tr>
-<tr><td><b>u</b></td><td>Points</td><td>float32</td><td>3</td><td>-2.987e-03</td><td>5.340e-03</td></tr>
-<tr><td>phase/mechanics/sigma / Pa</td><td>Cells</td><td>float32</td><td>9</td><td>-7.093e+07</td><td>1.356e+08</td></tr>
-<tr><td>phase/mechanics/epsilon_V^0.0(F) / 1</td><td>Cells</td><td>float32</td><td>9</td><td>-1.131e-02</td><td>1.351e-02</td></tr>
-<tr><td>phase/mechanics/sigma_vM / Pa</td><td>Cells</td><td>float32</td><td>1</td><td>5.676e+07</td><td>1.296e+08</td></tr>
-<tr><td>phase/mechanics/epsilon_V^0.0(F)_vM / 1</td><td>Cells</td><td>float32</td><td>1</td><td>1.213e-03</td><td>1.489e-02</td></tr>
+<tr><td><b>u</b></td><td>Points</td><td>float32</td><td>3</td><td>-2.914e-03</td><td>5.266e-03</td></tr>
+<tr><td>phase/mechanics/sigma / Pa</td><td>Cells</td><td>float32</td><td>9</td><td>-8.754e+07</td><td>1.532e+08</td></tr>
+<tr><td>phase/mechanics/epsilon_V^0.0(F) / 1</td><td>Cells</td><td>float32</td><td>9</td><td>-8.657e-03</td><td>1.126e-02</td></tr>
+<tr><td>phase/mechanics/sigma_vM / Pa</td><td>Cells</td><td>float32</td><td>1</td><td>5.698e+07</td><td>1.312e+08</td></tr>
+<tr><td>phase/mechanics/epsilon_V^0.0(F)_vM / 1</td><td>Cells</td><td>float32</td><td>1</td><td>1.062e-03</td><td>1.250e-02</td></tr>
 </table>
 
 </td></tr> </table></div></div>
@@ -1179,9 +1202,9 @@ The job damask_mg_2 was saved and received the ID: 89
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d9fc3a7e7e6a4b4db560fb6d01e0c455", "version_major": 2, "version_minor": 0}
+{"model_id": "e1c27d0880e04076a997393a940d3362", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d9fc3a7e7e6a4b4db560fb6d01e0c455", "version_major": 2, "version_minor": 0}
+{"model_id": "e1c27d0880e04076a997393a940d3362", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 </div>
@@ -1216,7 +1239,7 @@ The job damask_mg_2 was saved and received the ID: 89
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Stress-Strain&#39;)
 </pre></div>
 </div>
-<img alt="../_images/3_lammps-damask-workflow_39_1.png" src="../_images/3_lammps-damask-workflow_39_1.png" />
+<img alt="../_images/3_lammps-damask-workflow_44_1.png" src="../_images/3_lammps-damask-workflow_44_1.png" />
 </div>
 </div>
 </div>
