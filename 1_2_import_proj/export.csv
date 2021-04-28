@@ -1,0 +1,6 @@
+,id,status,chemicalformula,job,subjob,project,timestart,timestop,totalcputime,computer,hamilton,hamversion,parentid,masterid
+0,0,finished,Al108,Al_T800K,/Al_T800K,lammps_project/first_steps,2021-04-27 02:43:04.398418,2021-04-27 02:43:06.428305,2.0,pyiron@cmleo14#1,Lammps,0.1,,
+1,1,finished,Al108,Al_T200K,/Al_T200K,lammps_project/first_steps,2021-04-27 03:06:20.410345,2021-04-27 03:06:22.363131,1.0,pyiron@cmleo14#1,Lammps,0.1,,
+2,2,finished,Al108,Al_T400K,/Al_T400K,lammps_project/first_steps,2021-04-27 03:06:22.894415,2021-04-27 03:06:24.984784,2.0,pyiron@cmleo14#1,Lammps,0.1,,
+3,3,finished,Al108,Al_T600K,/Al_T600K,lammps_project/first_steps,2021-04-27 03:06:25.604594,2021-04-27 03:06:27.670037,2.0,pyiron@cmleo14#1,Lammps,0.1,,
+4,4,finished,Al108,Al_T1000K,/Al_T1000K,lammps_project/first_steps,2021-04-27 03:06:28.976964,2021-04-27 03:06:31.090220,2.0,pyiron@cmleo14#1,Lammps,0.1,,
