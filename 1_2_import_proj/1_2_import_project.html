@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Integrating a generic, python tool in pyiron (Level B, recommended approach) &#8212; PMD-workflow-workshop</title>
+    <title>Importing a project &#8212; PMD-workflow-workshop</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,8 +54,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Integrating a generic, non-python tool in pyiron (Level B, recommended approach)" href="2_1_custom_bash_job.html" />
-    <link rel="prev" title="Hands-on session" href="../0_opening_notebook.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,19 +90,19 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../0_opening_notebook.html">
    Hands-on session
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_customized_job/2_0_custom_python_job.html">
    Integrating a generic, python tool in pyiron (Level B, recommended approach)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2_1_custom_bash_job.html">
+  <a class="reference internal" href="../2_customized_job/2_1_custom_bash_job.html">
    Integrating a generic, non-python tool in pyiron (Level B, recommended approach)
   </a>
  </li>
@@ -163,7 +161,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/2_customized_job/2_0_custom_python_job.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/1_2_import_proj/1_2_import_project.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -188,7 +186,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/2_customized_job/2_0_custom_python_job.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/materialdigital/PMD-workflow-workshop/master?urlpath=lab/tree/1_2_import_proj/1_2_import_project.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -211,14 +209,21 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercise-1">
-   Exercise 1:
+  <a class="reference internal nav-link" href="#testing-our-import">
+   Testing our import
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercise-2">
-   Exercise 2:
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise1">
+     Exercise1:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise2">
+     Exercise2:
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -232,79 +237,186 @@
         
               <div>
                 
-  <div class="section" id="integrating-a-generic-python-tool-in-pyiron-level-b-recommended-approach">
-<h1>Integrating a generic, python tool in pyiron (Level B, recommended approach)<a class="headerlink" href="#integrating-a-generic-python-tool-in-pyiron-level-b-recommended-approach" title="Permalink to this headline">¶</a></h1>
-<p>To integrate a new python tool into pyiron, one needs to create a pyiron job class, which is inherited from pyiron generic job class: <code class="docutils literal notranslate"><span class="pre">PythonTemplateJob</span></code></p>
+  <div class="section" id="importing-a-project">
+<h1>Importing a project<a class="headerlink" href="#importing-a-project" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">PythonTemplateJob</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_atomistics</span> <span class="kn">import</span> <span class="n">Project</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ToyPythonJob</span><span class="p">(</span><span class="n">PythonTemplateJob</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ToyPythonJob</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span> 
-        <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s1">&#39;input_energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
-    
-    <span class="c1"># This function is executed </span>
-    <span class="k">def</span> <span class="nf">run_static</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_hdf5</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;output/generic&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5out</span><span class="p">:</span> 
-             <span class="n">h5out</span><span class="p">[</span><span class="s2">&quot;energy_tot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s2">&quot;input_energy&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="exercise-1">
-<h2>Exercise 1:<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Create a project, which includes a job of type <code class="docutils literal notranslate"><span class="pre">ToyPythonJob</span></code></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyiron_base</span> <span class="kn">import</span> <span class="n">Project</span>
-<span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="s2">&quot;imported_proj&quot;</span><span class="p">)</span>
 <span class="n">pr</span><span class="o">.</span><span class="n">remove_jobs_silently</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">job_type</span><span class="o">=</span><span class="n">ToyPythonJob</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="s2">&quot;toy&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
-<span class="n">job</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function JobCore.__del__ at 0x7ff13c4d1a60&gt;
-Traceback (most recent call last):
-  File &quot;/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/job/core.py&quot;, line 851, in __del__
-    del self._name
-AttributeError: _name
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Parameter  Value Comment
-0  input_energy    100        
-The job toy was saved and received the ID: 70
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/muhammad/miniconda3/envs/workshop_test/lib/python3.8/site-packages/pyiron_base/generic/hdfio.py:361: UserWarning: swmr=True only affects read (&#39;r&#39;) mode. For swmr write mode, set f.swmr_mode = True after opening the file.
-  with h5py.File(self.file_name, mode=&quot;a&quot;, libver=&quot;latest&quot;, swmr=True) as h:
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h2>Exercise 2:<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>How to access the <code class="docutils literal notranslate"><span class="pre">energy_tot</span></code> from the output of the job.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;output/generic/energy_tot&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">csv_file_name</span><span class="o">=</span><span class="s1">&#39;export.csv&#39;</span><span class="p">,</span><span class="n">origin_path</span><span class="o">=</span><span class="s1">&#39;lammps_project&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="testing-our-import">
+<h2>Testing our import<a class="headerlink" href="#testing-our-import" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise1">
+<h3>Exercise1:<a class="headerlink" href="#exercise1" title="Permalink to this headline">¶</a></h3>
+<p>inspect the <code class="docutils literal notranslate"><span class="pre">job_table</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">job_table</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>chemicalformula</th>
+      <th>job</th>
+      <th>subjob</th>
+      <th>projectpath</th>
+      <th>project</th>
+      <th>timestart</th>
+      <th>timestop</th>
+      <th>totalcputime</th>
+      <th>computer</th>
+      <th>hamilton</th>
+      <th>hamversion</th>
+      <th>parentid</th>
+      <th>masterid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>91</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T800K</td>
+      <td>/Al_T800K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop/1_2_import_proj/imported_proj/first_steps/</td>
+      <td>2021-04-27 02:43:04.398418</td>
+      <td>2021-04-27 02:43:06.428305</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>92</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T200K</td>
+      <td>/Al_T200K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop/1_2_import_proj/imported_proj/first_steps/</td>
+      <td>2021-04-27 03:06:20.410345</td>
+      <td>2021-04-27 03:06:22.363131</td>
+      <td>1.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>93</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T400K</td>
+      <td>/Al_T400K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop/1_2_import_proj/imported_proj/first_steps/</td>
+      <td>2021-04-27 03:06:22.894415</td>
+      <td>2021-04-27 03:06:24.984784</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>94</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T600K</td>
+      <td>/Al_T600K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop/1_2_import_proj/imported_proj/first_steps/</td>
+      <td>2021-04-27 03:06:25.604594</td>
+      <td>2021-04-27 03:06:27.670037</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>95</td>
+      <td>finished</td>
+      <td>Al108</td>
+      <td>Al_T1000K</td>
+      <td>/Al_T1000K</td>
+      <td>/home/muhammad/</td>
+      <td>workspace/tmp/PMD-workflow-workshop/1_2_import_proj/imported_proj/first_steps/</td>
+      <td>2021-04-27 03:06:28.976964</td>
+      <td>2021-04-27 03:06:31.090220</td>
+      <td>2.0</td>
+      <td>pyiron@cmleo14#1</td>
+      <td>Lammps</td>
+      <td>0.1</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="exercise2">
+<h3>Exercise2:<a class="headerlink" href="#exercise2" title="Permalink to this headline">¶</a></h3>
+<p>With the help of pyiron GUI, plot the temperature of the job <code class="docutils literal notranslate"><span class="pre">Al_T800K</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pr</span><span class="o">.</span><span class="n">gui</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6a516ff451124acd9f077b563e8ad6df", "version_major": 2, "version_minor": 0}
+</script></div>
 </div>
 </div>
 </div>
@@ -323,7 +435,7 @@ The job toy was saved and received the ID: 70
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./2_customized_job"
+            path: "./1_2_import_proj"
         },
         predefinedOutput: true
     }
@@ -335,8 +447,6 @@ The job toy was saved and received the ID: 70
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../0_opening_notebook.html" title="previous page">Hands-on session</a>
-    <a class='right-next' id="next-link" href="2_1_custom_bash_job.html" title="next page">Integrating a generic, non-python tool in pyiron (Level B, recommended approach)</a>
 
         </div>
         
