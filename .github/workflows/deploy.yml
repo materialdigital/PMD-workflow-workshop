@@ -26,7 +26,7 @@ jobs:
         echo "- file: README.md" > _toc.yml
         echo "- file: 0_opening_notebook.ipynb" >> _toc.yml
         echo "- file: 1_1_intro_pyiron_building_blocks/1_1_intro.ipynb" >> _toc.yml
-        echo "- file: 1_2_import_project/1_2_import_project.ipynb" >> _toc.yml
+        echo "- file: 1_2_import_proj/1_2_import_project.ipynb" >> _toc.yml
         echo "- file: 2_customized_job/2_0_custom_python_job.ipynb" >> _toc.yml
         echo "- file: 2_customized_job/2_1_custom_bash_job.ipynb" >> _toc.yml
         echo "- file: 3_lammps_damask_workflow/3_lammps-damask-workflow.ipynb" >> _toc.yml
