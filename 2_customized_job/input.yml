@@ -1,4 +1,5 @@
 energy_constant: 0.1
+equilibrium_lengh: 5.0
 positions:
 - - 3.137544466813198
   - -1.980814354656597
