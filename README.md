@@ -16,4 +16,4 @@ The repository of the PMD onboarding workshop. The repository includes the pyiro
 | 3_lammps-damask-workflow.ipynb | lammps-damask workflow to obtain macroscopic response based on atomistic properties | 3_lammps_damask_workflow/ | 
 | 4_data_mining.ipynb | introduction to data mining capabilities in pyiron | 4_data_mining/ |  
 ## login to the server  
-<img src="login.gif" width="400" height="400" />
+<img src="login.gif" align="center" width="400" height="400" />
