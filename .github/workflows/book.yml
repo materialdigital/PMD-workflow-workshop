@@ -23,7 +23,6 @@ jobs:
     - name: Install Jupyterbook
       shell: bash -l {0}
       run: |
-        pip install git+https://github.com/ExecutableBookProject/jupyter-book
         echo "- file: README.md" > _toc.yml
         echo "- file: 0_opening_notebook.ipynb" >> _toc.yml
         echo "- file: 1_1_intro_pyiron_building_blocks/1_1_intro.ipynb" >> _toc.yml
