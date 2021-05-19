@@ -12,7 +12,8 @@ bash .github/ci_support/install_nglview.sh
 
 cp Exercises/1_intro.ipynb 1_1_intro_pyiron_building_blocks/1_1_intro.ipynb
 cp Exercises/1_2_import_project.ipynb 1_2_import_proj/
-cp Exercises/{2_0_custom_python_job.ipynb,2_1_custom_bash_job.ipynb} 2_customized_job/
+cp Exercises/2_0_custom_python_job.ipynb 2_customized_job/
+cp Exercises/2_1_custom_bash_job.ipynb 2_customized_job/
 cp Exercises/3_lammps-damask-workflow.ipynb 3_lammps_damask_workflow/
 rm -r Exercises/
 rm CODE_OF_CONDUCT.md LICENSE README.md environment.yml login.gif meta.json
