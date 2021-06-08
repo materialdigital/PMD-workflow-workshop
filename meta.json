@@ -18,5 +18,6 @@
         "LAMMPS",
         "Macroscopic response",
         "DAMASK"
-    ]
+    ],
+    "logo": "logo_dark.png"
 }
