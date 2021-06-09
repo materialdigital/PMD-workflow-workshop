@@ -1,6 +1,6 @@
 {
     "workflow_environment":"pyiron",
-    "title": "PMD_onboarding_workshop_pyiron",
+    "title": "PMD onboarding workshop: pyiron",
     "authors": ["Muhammad Hassani <hassani@mpie.de>"],
     "description": "The pyiron workflows presented in PMD onboarding workshop, 2021-04-29",
     "release": "0.0.1" ,
