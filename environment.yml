@@ -1,5 +1,6 @@
 channels:
 - conda-forge
+- conda-forge/label/broken
 dependencies:
 - python=3.8
 - pyiron_atomistics=0.2.10
